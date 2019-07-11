@@ -4,21 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Constraint implements Serializable {
+public class Step implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
 
-    private String label ;
+    private String Description ;
+
+    private int priority ;
+
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe ;
+
 }

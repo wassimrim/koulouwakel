@@ -12,21 +12,22 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ingredient implements Serializable {
+public class Instruction implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
 
-    private String name ;
+    private String Description ;
 
-    private String unitofmeasure ;
-    @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private Picture picture ;
-
+    private int quantity ;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category ;
+    @JoinColumn(name = "step_id")
+    private Step step ;
+
+    @ManyToOne
+    @JoinColumn(name = "ingredient_id")
+    private Ingredient ingredient ;
 }

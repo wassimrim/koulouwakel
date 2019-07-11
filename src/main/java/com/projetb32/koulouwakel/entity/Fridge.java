@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ingredient implements Serializable {
+public class Fridge implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,8 @@ public class Ingredient implements Serializable {
 
     private String name ;
 
-    private String unitofmeasure ;
     @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private Picture picture ;
+    @JoinColumn(name = "user_id")
+    private User user ;
 
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category ;
 }

@@ -20,7 +20,7 @@ public class ConstraintTagPk implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
     @JoinColumn(name = "constraint_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Constraint constraint ;
+    private Restriction restriction;
 
 
 }
