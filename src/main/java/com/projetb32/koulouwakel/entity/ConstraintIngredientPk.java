@@ -12,15 +12,18 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConstraintTagPk implements Serializable {
+public class ConstraintIngredientPk implements Serializable {
+
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
-    @JoinColumn(name = "tag_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Tag tag ;
+    @JoinColumn(name = "ingredient_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Ingredient ingredient ;
+
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
     @JoinColumn(name = "constraint_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Constraint constraint ;
+
 
 
 }
