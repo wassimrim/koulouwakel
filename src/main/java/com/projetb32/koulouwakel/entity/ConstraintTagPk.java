@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.entity;
+/*package com.projetb32.koulouwakel.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,3 +24,4 @@ public class ConstraintTagPk implements Serializable {
 
 
 }
+*/

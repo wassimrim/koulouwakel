@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.entity;
+/*package com.projetb32.koulouwakel.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -18,4 +18,4 @@ public class ConstraintTag {
     protected ConstraintTagPk constraintTagPk ;
 
 
-}
+}*/
