@@ -1,8 +1,13 @@
 package com.projetb32.koulouwakel.repository;
 
+import com.projetb32.koulouwakel.entity.Picture;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.Optional;
+
 @RepositoryRestResource(path="picture",collectionResourceRel="picture")
-public interface Picture  extends PagingAndSortingRepository<Picture, Long> {
+public interface PictureRepository extends PagingAndSortingRepository<Picture, Long> {
+
+Optional<Picture> findByLabel(String label);
 }
