@@ -1,5 +1,3 @@
-/*<<<<<<< HEAD
-=======
 package com.projetb32.koulouwakel.entity;
 
 import lombok.AllArgsConstructor;
@@ -9,27 +7,22 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ingredient implements Serializable {
+public class Step implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
 
-    private String name ;
+    private String Description ;
 
-    private String unitofmeasure ;
-    @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private Picture picture ;
-
+    private int priority ;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category ;
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe ;
+
 }
->>>>>>> 9a9e2f5e239b1efd81a0765b35a11afe5453120a*/

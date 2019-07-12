@@ -1,5 +1,3 @@
-/*<<<<<<< HEAD
-=======
 package com.projetb32.koulouwakel.entity;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ingredient implements Serializable {
+public class Fridge implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +20,8 @@ public class Ingredient implements Serializable {
 
     private String name ;
 
-    private String unitofmeasure ;
     @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private Picture picture ;
+    @JoinColumn(name = "user_id")
+    private User user ;
 
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category ;
 }
->>>>>>> 9a9e2f5e239b1efd81a0765b35a11afe5453120a*/
