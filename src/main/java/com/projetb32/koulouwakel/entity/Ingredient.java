@@ -1,3 +1,4 @@
+
 package com.projetb32.koulouwakel.entity;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class Ingredient implements Serializable {
 
     private String name ;
 
-    private String unitofmeasure ;
+    private String unit_of_measure ;
     @ManyToOne
     @JoinColumn(name = "picture_id")
     private Picture picture ;

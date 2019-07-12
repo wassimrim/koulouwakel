@@ -8,11 +8,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Fridge implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

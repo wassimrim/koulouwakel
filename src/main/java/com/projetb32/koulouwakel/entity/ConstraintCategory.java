@@ -1,6 +1,7 @@
 package com.projetb32.koulouwakel.entity;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,7 @@ public class ConstraintCategory {
 
     @EmbeddedId
     protected ConstraintCategoryPk constraintCategoryPk ;
+
 }
+
+

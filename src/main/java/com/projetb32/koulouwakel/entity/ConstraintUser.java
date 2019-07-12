@@ -1,4 +1,5 @@
-package com.projetb32.koulouwakel.entity;
+ package com.projetb32.koulouwakel.entity;
+
 
 
 import lombok.AllArgsConstructor;
@@ -18,3 +19,4 @@ public class ConstraintUser {
     @EmbeddedId
     protected ConstraintUserPk constraintUserPk ;
 }
+

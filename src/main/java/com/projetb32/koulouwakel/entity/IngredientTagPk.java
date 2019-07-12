@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.entity;
+ package com.projetb32.koulouwakel.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +14,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class IngredientTagPk implements Serializable {
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "tag_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Tag tag ;
+    private Tag tag;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ingredient_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Ingredient ingredient ;
+    private Ingredient ingredient;
 
 }

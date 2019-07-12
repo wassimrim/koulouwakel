@@ -1,4 +1,7 @@
+
 package com.projetb32.koulouwakel.entity;
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,3 +34,4 @@ public class Instruction implements Serializable {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient ;
 }
+
