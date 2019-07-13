@@ -8,6 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource(path="ingredient",collectionResourceRel="ingredient")
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
@@ -15,6 +16,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 public List<Ingredient> findByCategoryAndPicture(Category c , Picture p);
 public List<Ingredient> findByCategory(Category c);
 public List<Ingredient> findByPicture(Picture p);
-
+public Optional<Ingredient> findByName(String name);
 
 }
