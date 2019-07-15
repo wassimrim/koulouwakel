@@ -1,0 +1,107 @@
+package com.projetb32.koulouwakel.controller;
+
+import com.projetb32.koulouwakel.entity.Restriction;
+import com.projetb32.koulouwakel.service.RestrictionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@RestController
+@RequestMapping("/application")
+public class RestrictionController {
+
+
+
+    private static final Logger log = LoggerFactory.getLogger(RestrictionController.class);
+
+    @Autowired
+    private RestrictionService restrictionService;
+
+
+    @GetMapping("/restrictions")
+    public ResponseEntity<List<Restriction>> retreiveRestriction() {
+
+        if (restrictionService.getAllRestriction().isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return new ResponseEntity<>(restrictionService.getAllRestriction(), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/restrictions/{restrictionId}")
+    public ResponseEntity<Optional<Restriction>>retreiveRestrictionById(@PathVariable String restrictionId) {
+
+
+        if (!restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(restrictionService.getRestrictionById(Long.parseLong(restrictionId)), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/restrictions")
+    public ResponseEntity<Restriction> addRestriction(@RequestBody Restriction restriction) {
+        if (restriction != null) {
+            if (restrictionService.getRestrictionByLabel(restriction.getLabel()).isPresent()) {
+                return ResponseEntity.noContent().build();
+            }
+        }
+        //  log.info("affichage"+activite.getEvenement());
+        Restriction RestrictionLocal = restrictionService.addRestriction(restriction);
+
+        if (RestrictionLocal == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("/restrictions/{restrictionId}")
+    public ResponseEntity<Restriction> updateRestriction(@PathVariable String restrictionId, @RequestBody Restriction restriction) {
+
+        if (restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
+
+            Restriction RestrictionLocal = restrictionService.updateTag(Long.parseLong(restrictionId), restriction);
+
+            if (RestrictionLocal == null) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
+            }
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @DeleteMapping("/restrictions/{restrictionId}")
+    public ResponseEntity<Restriction> deleteRestriction(@PathVariable String restrictionId) {
+
+        if (restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
+
+            restrictionService.deleteTag(Long.parseLong(restrictionId));
+
+			/*URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ActiviteId)
+					.toUri();*/
+
+            // Status
+
+            return ResponseEntity.accepted().build();
+
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+
+
+
+
+
+}
