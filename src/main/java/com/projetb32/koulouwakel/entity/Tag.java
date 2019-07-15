@@ -18,7 +18,7 @@ public class Tag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private long id ;
 
     private String label ;
 
