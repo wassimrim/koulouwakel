@@ -1,4 +1,3 @@
-
 package com.projetb32.koulouwakel.entity;
 
 
@@ -13,19 +12,9 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FridgeIngredient {
-
-
+public class RecipeIngredient {
 
     @EmbeddedId
-    protected FridgeIngredientPk fridgeIngredientPk ;
+    protected RecipeIngredientPk recipeIngredientPk ;
 
-
-    private String dlc ;
-
-    private float quantity ;
-
-    public FridgeIngredient(FridgeIngredientPk fridgeIngredientPk) {
-        super();
-    }
 }

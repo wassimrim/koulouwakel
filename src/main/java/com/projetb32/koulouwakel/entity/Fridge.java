@@ -26,4 +26,5 @@ public class Fridge implements Serializable {
     @JoinColumn(name = "user_id")
     private User user ;
 
+
 }
