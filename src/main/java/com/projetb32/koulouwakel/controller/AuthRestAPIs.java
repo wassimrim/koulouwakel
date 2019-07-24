@@ -48,6 +48,8 @@ public class AuthRestAPIs {
     @Autowired
     PasswordEncoder encoder;
 
+    /* ssss */
+
     @Autowired
     JwtProvider jwtProvider;
 
