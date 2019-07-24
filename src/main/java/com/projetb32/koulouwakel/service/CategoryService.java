@@ -11,6 +11,7 @@ import java.util.Optional;
 @Component
 public class CategoryService {
 
+    private int a;
     private final CategoryRepository categoryRepository ;
 
     public CategoryService(CategoryRepository categoryRepository) {
