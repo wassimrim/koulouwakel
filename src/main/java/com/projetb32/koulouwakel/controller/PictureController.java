@@ -9,12 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import sun.nio.ch.IOUtil;
 
+import javax.activation.FileTypeMap;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -45,35 +48,24 @@ public class PictureController {
 
     }
 
-  /*  @GetMapping("/pictures/{pictureId}")
-    public ResponseEntity<Optional<Picture>> retreivePictureById(@PathVariable String pictureId) {
+
+     @GetMapping("/pictures/{pictureId}")
+    public ResponseEntity<byte[]> retreivePictureById(@PathVariable String pictureId) throws Exception {
 
 
         if (!pictureService.getPictureById(Long.parseLong(pictureId)).isPresent()) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(pictureService.getPictureById(Long.parseLong(pictureId)), HttpStatus.OK);
+
+            File img = new File("src/uploads/"+pictureService.getPictureById(Long.parseLong(pictureId)).get().getLabel());
+            return ResponseEntity.ok().contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(img))).body(Files.readAllBytes(img.toPath()));
         }
-    }*/
-  @GetMapping("/pictures/{pictureId}")
-  public @ResponseBody byte[] retreivePictureById(@PathVariable String pictureId) throws IOException {
+    }
 
 
-     // if (!pictureService.getPictureById(Long.parseLong(pictureId)).isPresent()) {
-       //   return ResponseEntity.noContent().build();
-    //  } else {
-
-          Picture p = pictureService.getPictureById(Long.parseLong(pictureId)).get();
-      log.info("ttt"+uploadDirectory.substring(59)+"/"+p.getLabel());
-          InputStream in = getClass()
-                  .getResourceAsStream(uploadDirectory.substring(59)+"/"+p.getLabel());
-      return IOUtils.toByteArray(in);
-         // return new ResponseEntity<>(IOUtil.toByteArray(in)), HttpStatus.OK);
-      }
- // }
 
 
-     @PostMapping("/pictures")
+    @PostMapping("/pictures")
     public ResponseEntity<Picture> addPicture( @RequestBody MultipartFile file) {
 
 
