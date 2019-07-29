@@ -18,6 +18,10 @@ public class SignUpForm {
     @Email
     private String email;
 
+    @NotBlank
+    @Size(max = 60)
+    private String address;
+
     private Set<String> role;
 
     @NotBlank
@@ -62,5 +66,13 @@ public class SignUpForm {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

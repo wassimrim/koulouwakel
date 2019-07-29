@@ -35,15 +35,15 @@ public class FamilyService {
 
     }
 
-    public Optional<Family> getFamilyBytype(String name) {
+    public Optional<Family> getFamilyByName(String name) {
 
         return familyRepository.findByName(name);
     }
 
 
-    public Optional<Family> getFamilyByParent(String parent) {
+    public Optional<Family> getFamilysByParentFamily(String parentFamily) {
 
-        return familyRepository.findByParent(parent);
+        return familyRepository.findByParentFamily(parentFamily);
     }
 
 

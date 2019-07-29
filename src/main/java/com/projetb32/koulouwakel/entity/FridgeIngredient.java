@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -21,7 +22,7 @@ public class FridgeIngredient {
     protected FridgeIngredientPk fridgeIngredientPk ;
 
 
-    private String dlc ;
+    private LocalDate dlc ;
 
     private float quantity ;
 

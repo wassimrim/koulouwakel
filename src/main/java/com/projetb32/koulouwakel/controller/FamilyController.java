@@ -46,45 +46,65 @@ public class FamilyController {
     }
 
 
-    @GetMapping("/familys/{familyType}")
-    public ResponseEntity<Optional<Family>> retreiveFamilyByType(@PathVariable String familyType) {
+    @GetMapping("/familys/{familyName}")
+    public ResponseEntity<Optional<Family>> retreiveFamilyByName(@PathVariable String familyName) {
 
 
-        if (!familyService.getFamilyBytype(familyType).isPresent()) {
+        if (!familyService.getFamilyByName(familyName).isPresent()) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(familyService.getFamilyBytype(familyType), HttpStatus.OK);
+            return new ResponseEntity<>(familyService.getFamilyByName(familyName), HttpStatus.OK);
         }
     }
 
-    @GetMapping("/familys/{familyparent}")
-    public ResponseEntity<Optional<Family>> retreiveFamilyByParent(@PathVariable String familyparent) {
+    @GetMapping("/familys/{parentfamily}")
+    public ResponseEntity<Optional<Family>> retreiveFamilyByParentFamily(@PathVariable String parentFamily) {
 
 
-        if (!familyService.getFamilyByParent(familyparent).isPresent()) {
+        if (!familyService.getFamilysByParentFamily(parentFamily).isPresent()) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(familyService.getFamilyByParent(familyparent), HttpStatus.OK);
+            return new ResponseEntity<>(familyService.getFamilysByParentFamily(parentFamily), HttpStatus.OK);
         }
     }
 
 
 
 
-    @PostMapping("/familys")
-    public ResponseEntity<Family> addFamily(@RequestBody Family family) {
+    @PostMapping("/familys/{id}")
+    public ResponseEntity<Family> addFamily(@RequestBody Family family,@PathVariable Long id) {
+        Family parentFamily =null;
         if (family != null) {
-            if (familyService.getFamilyBytype(family.getName()).isPresent()) {
+            parentFamily= familyService.getFamilyById(id).get();
+            if (familyService.getFamilyByName(family.getName()).isPresent() || parentFamily == null) {
                 return ResponseEntity.noContent().build();
             }
         }
-        //  log.info("affichage"+activite.getEvenement());
-        Family categoryLocal = familyService.addFamily(family);
+            family.setParentFamily(parentFamily);
+        Family familyLocal = familyService.addFamily(family);
 
-        if (categoryLocal == null) {
+        if (familyLocal == null) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(categoryLocal, HttpStatus.OK);
+            return new ResponseEntity<>(familyLocal, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/familys")
+    public ResponseEntity<Family> addFamily(@RequestBody Family family) {
+
+        if (family != null) {
+
+            if (familyService.getFamilyByName(family.getName()).isPresent() ) {
+                return ResponseEntity.noContent().build();
+            }
+        }
+        Family familyLocal = familyService.addFamily(family);
+
+        if (familyLocal == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(familyLocal, HttpStatus.OK);
         }
     }
 

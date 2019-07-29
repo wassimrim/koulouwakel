@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalTime;
 
 @Entity @Data @AllArgsConstructor @NoArgsConstructor
 public class Recipe implements Serializable {
@@ -16,9 +17,9 @@ public class Recipe implements Serializable {
 
     private String title ;
 
-    private float preparation  ;
+    private LocalTime prepDuration ;
 
-    private int nbperson ;
+    private int nbpPerson ;
 
     private String difficulty ;
 
