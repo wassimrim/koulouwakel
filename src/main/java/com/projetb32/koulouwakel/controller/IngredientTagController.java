@@ -45,10 +45,10 @@ public class IngredientTagController {
 
 
     @PostMapping("/ingredienttags/{tagId}/{ingredientId}")
-    public ResponseEntity<IngredientTag> addIngredient(@RequestBody IngredientTag ingredientTag, @PathVariable long tagId, @PathVariable long ingredientId) {
+    public ResponseEntity<IngredientTag> addIngredient(/*@RequestBody IngredientTag ingredientTag,*/ @PathVariable long tagId, @PathVariable long ingredientId) {
 
 
-        IngredientTag ingredientLocal = ingredientTagService.addIngredientTag(ingredientTag,tagId,ingredientId);
+        IngredientTag ingredientLocal = ingredientTagService.addIngredientTag(/*ingredientTag,*/tagId,ingredientId);
 
         if (ingredientLocal == null) {
             return ResponseEntity.noContent().build();

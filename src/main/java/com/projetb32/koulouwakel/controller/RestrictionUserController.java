@@ -46,10 +46,10 @@ public class RestrictionUserController {
 
 
     @PostMapping("/restrictionuser/{userId}/{restrictionId}")
-    public ResponseEntity<ConstraintUser> addIngredient(@RequestBody ConstraintUser constraintUser, @PathVariable long userId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintUser> addIngredient( @PathVariable long userId, @PathVariable long restrictionId) {
 
 
-        ConstraintUser restrictionLocal = restrictionUserService.addRestrictionUser(constraintUser ,userId,restrictionId);
+        ConstraintUser restrictionLocal = restrictionUserService.addRestrictionUser(userId,restrictionId);
 
         if (restrictionLocal == null) {
             return ResponseEntity.noContent().build();

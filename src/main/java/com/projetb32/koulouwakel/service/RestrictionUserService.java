@@ -29,7 +29,7 @@ public class RestrictionUserService {
      }
 
 
-    public ConstraintUser addRestrictionUser(ConstraintUser constraintUser, long restriction_id , long user_id) {
+    public ConstraintUser addRestrictionUser(  long user_id,long restriction_id ) {
 
         ConstraintUser p =new ConstraintUser();
         ConstraintUserPk pp = new ConstraintUserPk();

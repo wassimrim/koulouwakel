@@ -30,13 +30,12 @@ public class FridgeIngredientService {
 
     public FridgeIngredient addFridgeIngredient(FridgeIngredient fridgeIngredient, long fridge_id , long ingredient_id) {
 
-        FridgeIngredient p =new FridgeIngredient();
         FridgeIngredientPk pp = new FridgeIngredientPk();
         pp.setFridge(fridgeRepository.findById(fridge_id).get());
         pp.setIngredient(ingredientRepository.findById(ingredient_id).get());
-        p.setFridgeIngredientPk(pp);
+        fridgeIngredient.setFridgeIngredientPk(pp);
 
-        return fridgeIngredientRepository.save(p);
+        return fridgeIngredientRepository.save(fridgeIngredient);
     }
 
     public List<FridgeIngredient> getAllFridgeIngredient() {

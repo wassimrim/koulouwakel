@@ -29,7 +29,7 @@ public class IngredientTagService {
     }
 
 
-    public IngredientTag addIngredientTag(IngredientTag ingredientTag, long ingredient_id , long tag_id) {
+    public IngredientTag addIngredientTag(/*IngredientTag ingredientTag,*/ long ingredient_id , long tag_id) {
 
         IngredientTag p =new IngredientTag();
         IngredientTagPk pp = new IngredientTagPk();

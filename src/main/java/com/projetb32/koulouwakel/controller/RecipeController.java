@@ -77,9 +77,6 @@ public class RecipeController {
         }
     }
 
-
-
-
     @PostMapping("/recipes/{family_id}/{user_id}")
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe,@PathVariable long family_id,@PathVariable long user_id) {
 
@@ -92,6 +89,19 @@ public class RecipeController {
             return new ResponseEntity<>(recipeLocal, HttpStatus.OK);
         }
     }
+
+   /* @PostMapping("/recipes/{family_id}/{user_id}")
+    public ResponseEntity<Recipe> addRecipej(@RequestBody Recipe recipe,@PathVariable long family_id,@PathVariable long user_id) {
+
+        //  log.info("affichage"+activite.getEvenement());
+        Recipe recipeLocal = recipeService.addRecipe(recipe,family_id,user_id);
+
+        if (recipeLocal == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(recipeLocal, HttpStatus.OK);
+        }
+    }*/
 
 
     @DeleteMapping("/recipes/{recipeId}")

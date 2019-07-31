@@ -27,7 +27,7 @@ public class RestrictionCategoryService {
     }
 
 
-    public ConstraintCategory addRestrictionCategory(ConstraintCategory constraintCategory, long restriction_id , long category_id) {
+    public ConstraintCategory addRestrictionCategory(  long category_id ,long restriction_id ) {
 
         ConstraintCategory p =new ConstraintCategory();
         ConstraintCategoryPk pp = new ConstraintCategoryPk();

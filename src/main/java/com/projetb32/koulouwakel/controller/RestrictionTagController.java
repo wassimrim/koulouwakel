@@ -45,10 +45,10 @@ public class RestrictionTagController {
 
 
     @PostMapping("/restrictiontags/{tagId}/{restrictionId}")
-    public ResponseEntity<ConstraintTag> addIngredient(@RequestBody ConstraintTag constraintTag, @PathVariable long tagId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintTag> addIngredient( @PathVariable long tagId, @PathVariable long restrictionId) {
 
 
-        ConstraintTag restrictionLocal = restrictiontagService.addRestrictionTag(constraintTag ,tagId,restrictionId);
+        ConstraintTag restrictionLocal = restrictiontagService.addRestrictionTag(tagId,restrictionId);
 
         if (restrictionLocal == null) {
             return ResponseEntity.noContent().build();

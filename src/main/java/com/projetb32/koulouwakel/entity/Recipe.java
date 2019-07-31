@@ -19,7 +19,7 @@ public class Recipe implements Serializable {
 
     private LocalTime prepDuration ;
 
-    private int nbpPerson ;
+    private int nbPerson ;
 
     private String difficulty ;
 

@@ -27,14 +27,13 @@ public class RestrictiontagService {
     }
 
 
-    public ConstraintTag addRestrictionTag(ConstraintTag constraintTag, long restriction_id , long tag_id) {
+    public ConstraintTag addRestrictionTag(  long tag_id, long restriction_id ) {
 
         ConstraintTag p =new ConstraintTag();
         ConstraintTagPk pp = new ConstraintTagPk();
         pp.setRestriction(restrictionRepository.findById(restriction_id).get());
         pp.setTag(tagRepository.findById(tag_id).get());
         p.setConstraintTagPk(pp);
-
         return restrictiontagRepository.save(p);
     }
 

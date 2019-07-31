@@ -28,7 +28,7 @@ public class RecipeIngredientService {
     }
 
 
-    public RecipeIngredient addRecipeIngredient(RecipeIngredient recipeIngredient, long ingredient_id , long recipe_id) {
+    public RecipeIngredient addRecipeIngredient( long recipe_id, long ingredient_id ) {
 
         RecipeIngredient p =new RecipeIngredient();
         RecipeIngredientPk pp = new RecipeIngredientPk();

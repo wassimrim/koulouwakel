@@ -45,10 +45,12 @@ public class RecipeIngredientController {
 
 
     @PostMapping("/recipeIngredients/{recipeId}/{ingredientId}")
-    public ResponseEntity<RecipeIngredient> addIngredient(@RequestBody RecipeIngredient recipeIngredient, @PathVariable long recipeId, @PathVariable long ingredientId) {
+    public ResponseEntity<RecipeIngredient> addIngredient( @PathVariable long recipeId, @PathVariable long ingredientId) {
 
 
-        RecipeIngredient ingredientLocal = recipeIngredientService.addRecipeIngredient(recipeIngredient,recipeId,ingredientId);
+
+
+        RecipeIngredient ingredientLocal = recipeIngredientService.addRecipeIngredient(recipeId,ingredientId);
 
         if (ingredientLocal == null) {
             return ResponseEntity.noContent().build();

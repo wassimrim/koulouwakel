@@ -28,7 +28,7 @@ public class RestrictioningredientService {
      }
 
 
-    public ConstraintIngredient addRestrictioningredient(ConstraintIngredient constraintIngredient, long restriction_id , long ingredient_id) {
+    public ConstraintIngredient addRestrictioningredient( long ingredient_id, long restriction_id ) {
 
         ConstraintIngredient p =new ConstraintIngredient();
         ConstraintIngredientPk pp = new ConstraintIngredientPk();
