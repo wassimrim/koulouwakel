@@ -33,6 +33,15 @@ public class InstructionService {
         return instructionRepository.save(instruction);
     }
 
+    public Instruction addInstructions(Instruction instruction , long step_id) {
+
+
+        instruction.setStep(stepRepository.findById(step_id).get());
+
+        return instructionRepository.save(instruction);
+    }
+
+
     public List<Instruction> getAllInstruction() {
 
 

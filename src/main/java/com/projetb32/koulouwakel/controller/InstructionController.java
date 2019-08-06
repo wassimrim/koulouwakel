@@ -68,6 +68,19 @@ public class InstructionController {
         }
     }
 
+    @PostMapping("/instructions/{step_id}")
+    public ResponseEntity<Instruction> addInstructions(@RequestBody Instruction instruction,@PathVariable long step_id) {
+
+        //  log.info("affichage"+activite.getEvenement());
+        Instruction ingredientLocal = instructionService.addInstructions(instruction,step_id);
+
+        if (ingredientLocal == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
+        }
+    }
+
 
     @DeleteMapping("/instructions/{instructionId}")
     public ResponseEntity<Instruction> deleteInstruction(@PathVariable String instructionId) {
