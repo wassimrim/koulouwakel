@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.controller;
+/*package com.projetb32.koulouwakel.controller;
 
 
 import com.projetb32.koulouwakel.entity.FridgeIngredient;
@@ -79,3 +79,4 @@ public class FridgeIngredientController {
 
 
 }
+*/

@@ -13,12 +13,13 @@ import java.util.Optional;
 @RepositoryRestResource(path="recipe",collectionResourceRel="recipe")
 public interface SearchRecipeRepository extends JpaRepository<Recipe, Long> {
 
-    @Query("	SELECT r.id ,r.country,r.difficulty,r.nbPerson ,r.prepDuration,r.title,r.family.id,r.user.id \r\n" +
-            "	FROM  RecipeIngredient ri , Ingredient i, FridgeIngredient fi,Fridge f ,Recipe r  \r\n" +
-            "	where  r.id = ri.recipeIngredientPk.recipe.id and  ri.recipeIngredientPk.ingredient.id = i.id and i.id= fi.fridgeIngredientPk.ingredient.id   \r\n" +
-            "	and f.id =fi.fridgeIngredientPk.fridge.id  and f.id = ?1 " +
-            "	GROUP BY r.id ")
-    public List<Recipe> findRecipeList ( Long id);
+  /*  @Query("   SELECT   ri.recipeIngredientPk.recipe.id  \r\n" +
+            "	FROM  RecipeIngredient ri  \r\n" +
+           " GROUP BY  ri.recipeIngredientPk.recipe.id ,ri.recipeIngredientPk.ingredient.id \r \n"+
+            "	HAVING  ri.recipeIngredientPk.ingredient.id =   ( select DISTINCT fi.fridgeIngredientPk.ingredient.id \r\n " +
+                                                                   "FROM FridgeIngredient fi  \r\n" +
+                                                                   "WHERE fi.fridgeIngredientPk.fridge.id = ?1  )")
+    public List<Recipe> findRecipeListFromFridgeAllIngredients( Long id);*/
 
 
 

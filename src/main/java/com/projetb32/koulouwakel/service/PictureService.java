@@ -94,4 +94,23 @@ public class PictureService {
 
         return picture;
     }
+    public Picture updatePicture2(Long id,MultipartFile file) {
+
+        Picture picture = pictureRepository.findById(id).get();
+        Path fileNameAndPathSource = Paths.get(uploadDirectory,file.getOriginalFilename());
+        picture.setLabel(file.getOriginalFilename());
+       // Path  currentlyFileNameAndPath = Paths.get(uploadDirectory,name);
+        StringBuilder fileName = new StringBuilder();
+        fileName.append(file.getOriginalFilename());
+        try {
+            Files.write(fileNameAndPathSource, file.getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        pictureRepository.save(picture);
+
+        return picture;
+    }
 }

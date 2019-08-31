@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -30,4 +32,7 @@ public class Ingredient implements Serializable {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category ;
+
+
+
 }

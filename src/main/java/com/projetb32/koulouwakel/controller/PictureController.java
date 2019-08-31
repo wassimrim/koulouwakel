@@ -85,12 +85,33 @@ public class PictureController {
 
     }
 
+
+
+
+
     @PutMapping("/pictures/{pictureId}/{pictureName}")
     public ResponseEntity<Picture> updatePicture(@PathVariable String pictureId, @PathVariable String pictureName) {
 
         if (!pictureService.getPictureByLabel(pictureName).isPresent()) {
 
             Picture pictureLocal = pictureService.updatePicture(Long.parseLong(pictureId), pictureName);
+
+            if (pictureLocal == null) {
+                return ResponseEntity.noContent().build(); //on doit changer le message de retour
+            } else {
+                return new ResponseEntity<>(pictureLocal, HttpStatus.OK);
+            }
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @PutMapping("/pictures/update2/{pictureId}")
+    public ResponseEntity<Picture> updatePictureIfNotExist(@RequestBody MultipartFile file,@PathVariable String pictureId) {
+
+        if (!pictureService.getPictureByLabel(file.getOriginalFilename()).isPresent()) {
+
+            Picture pictureLocal = pictureService.updatePicture2(Long.parseLong(pictureId),file);
 
             if (pictureLocal == null) {
                 return ResponseEntity.noContent().build(); //on doit changer le message de retour

@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.controller;
+/*package com.projetb32.koulouwakel.controller;
 
 
 import com.projetb32.koulouwakel.entity.Category;
@@ -25,10 +25,10 @@ public class SearchRecipeController {
     private SearchRecipeService searchRecipeService ;
 
 
-    @GetMapping("/searchRecipe/{idRecipe}")
-    public ResponseEntity<List<Recipe>> retreiveRecipesFromFridge(@PathVariable Long idRecipe) {
+    @GetMapping("/searchrecipeingredient/{idFridge}")
+    public ResponseEntity<List<Recipe>> retreiveRecipesFromFridge(@PathVariable String idFridge) {
 
-        return new ResponseEntity<>(searchRecipeService.searchRecipeFromFridge(idRecipe), HttpStatus.OK);
+        return new ResponseEntity<>(searchRecipeService.searchRecipeFromFridge(Long.parseLong(idFridge)), HttpStatus.OK);
 
     }
 
@@ -37,4 +37,4 @@ public class SearchRecipeController {
 
 
 
-}
+}*/

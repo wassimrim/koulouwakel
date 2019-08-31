@@ -1,4 +1,4 @@
-package com.projetb32.koulouwakel.service;
+/*package com.projetb32.koulouwakel.service;
 
 import com.projetb32.koulouwakel.entity.FridgeIngredient;
 import com.projetb32.koulouwakel.entity.FridgeIngredientPk;
@@ -60,3 +60,4 @@ public class FridgeIngredientService {
     }
 
 }
+*/

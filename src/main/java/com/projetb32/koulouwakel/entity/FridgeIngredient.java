@@ -10,13 +10,13 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.time.LocalDate;
 
-@Entity
+/*@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FridgeIngredient {
+public class FridgeIngredient {*/
 
-
+/*
 
     @EmbeddedId
     protected FridgeIngredientPk fridgeIngredientPk ;
@@ -30,3 +30,4 @@ public class FridgeIngredient {
         super();
     }
 }
+*/
