@@ -39,21 +39,21 @@ public class KoulouwakelApplication {
         fridgeRepository.findRecipe(Long.valueOf(1));
         log.info("ssssqq");
     }*/
-    @Bean
-    CommandLineRunner Start(FridgeRepository fridgeRepository , UserRepository userRepository , IngredientRepository ingredientRepository) {
+    //@Bean
+   // CommandLineRunner Start(FridgeRepository fridgeRepository , UserRepository userRepository , IngredientRepository ingredientRepository) {
       //  log.info("dd "+ fridgeRepository.findRecipe(Long.valueOf(1)));
         //List <Ingredient> ingredients = new ArrayList<>();
         //ingredients.add( ingredientRepository.findById(Long.valueOf(3)).get());
        // fridgeRepository.save(new Fridge("name",userRepository.findById(Long.valueOf(2)).get(),ingredients));
-        fridgeRepository.findById(Long.valueOf(1)).get().getIngredients().forEach(ing->{log.info("3assbaaa"+ing.getName());});
+       // fridgeRepository.findById(Long.valueOf(1)).get().getIngredients().forEach(ing->{log.info("3assbaaa"+ing.getName());});
         //log.info("wow"+fridgeRepository.findById(Long.valueOf(1)).get().toString());/*.get().getIngredients().toString());/*forEach( (i) -> {log.info("wow"+i.getName());}*/;
-        return args -> {
+   //     return args -> {
 
           //  fridgeRepository.findRecipe(Long.valueOf(1));
 
             //   iservice.addRole(roleKofti);
             //  iservice.addUser("toto8", "123","taoufik.yazidi@gmail.com");
-        };
+      //  };
 
-    }
+   // }
 }

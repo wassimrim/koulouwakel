@@ -26,13 +26,7 @@ public class Fridge implements Serializable {
     @JoinColumn(name = "user_id")
     private User user ;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 
-   private List<Ingredient> ingredients = new ArrayList<>();
 
-    public Fridge(String name, User user, List<Ingredient> ingredients) {
-        this.name = name;
-        this.user = user;
-        this.ingredients = ingredients;
-    }
+
 }

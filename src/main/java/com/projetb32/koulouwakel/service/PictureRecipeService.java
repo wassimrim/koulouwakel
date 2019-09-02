@@ -1,5 +1,6 @@
 package com.projetb32.koulouwakel.service;
 
+import com.projetb32.koulouwakel.entity.Picture;
 import com.projetb32.koulouwakel.entity.PictureRecipe;
 import com.projetb32.koulouwakel.entity.Recipe;
 import com.projetb32.koulouwakel.repository.PictureRecipeRepository;
@@ -89,6 +90,26 @@ public class PictureRecipeService {
 
         try {
             Files.move(fileNameAndPathSource,currentlyFileNameAndPath,StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        pictureRecipeRepository.save(pictureRecipe);
+
+        return pictureRecipe;
+    }
+
+    public PictureRecipe updatePictureRecipe2(Long id, MultipartFile file) {
+
+        PictureRecipe pictureRecipe = pictureRecipeRepository.findById(id).get();
+        Path fileNameAndPathSource = Paths.get(uploadDirectory,file.getOriginalFilename());
+        pictureRecipe.setLabel(file.getOriginalFilename());
+        // Path  currentlyFileNameAndPath = Paths.get(uploadDirectory,name);
+        StringBuilder fileName = new StringBuilder();
+        fileName.append(file.getOriginalFilename());
+        try {
+            Files.write(fileNameAndPathSource, file.getBytes());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.projetb32.koulouwakel.controller;
 
 
+import com.projetb32.koulouwakel.entity.Picture;
 import com.projetb32.koulouwakel.entity.PictureRecipe;
 import com.projetb32.koulouwakel.service.PictureRecipeService;
 
@@ -85,6 +86,23 @@ public class PictureRecipeController {
         if (!pictureRecipeService.getPictureRecipeByLabel(pictureName).isPresent()) {
 
             PictureRecipe pictureRecipeLocal = pictureRecipeService.updatePictureRecipe(Long.parseLong(pictureRecipeId), pictureName);
+
+            if (pictureRecipeLocal == null) {
+                return ResponseEntity.noContent().build(); //on doit changer le message de retour
+            } else {
+                return new ResponseEntity<>(pictureRecipeLocal, HttpStatus.OK);
+            }
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @PutMapping("/picturerecipes/update2/{pictureId}")
+    public ResponseEntity<PictureRecipe> updatePictureIfNotExist(@RequestBody MultipartFile file, @PathVariable String pictureId) {
+
+        if (!pictureRecipeService.getPictureRecipeByLabel(file.getOriginalFilename()).isPresent()) {
+
+            PictureRecipe pictureRecipeLocal = pictureRecipeService.updatePictureRecipe2(Long.parseLong(pictureId),file);
 
             if (pictureRecipeLocal == null) {
                 return ResponseEntity.noContent().build(); //on doit changer le message de retour
