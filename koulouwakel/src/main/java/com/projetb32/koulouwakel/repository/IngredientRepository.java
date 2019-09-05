@@ -4,6 +4,7 @@ import com.projetb32.koulouwakel.entity.Category;
 import com.projetb32.koulouwakel.entity.Ingredient;
 import com.projetb32.koulouwakel.entity.Picture;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -17,5 +18,9 @@ public List<Ingredient> findByCategoryAndPicture(Category c , Picture p);
 public List<Ingredient> findByCategory(Category c);
 public List<Ingredient> findByPicture(Picture p);
 public Optional<Ingredient> findByName(String name);
+
+
+
+public Optional<List<Ingredient>> findIngredientByCategory(Category category);
 
 }

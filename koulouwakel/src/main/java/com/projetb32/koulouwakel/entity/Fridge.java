@@ -1,5 +1,6 @@
 package com.projetb32.koulouwakel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,13 @@ public class Fridge implements Serializable {
     @JoinColumn(name = "user_id")
     private User user ;
 
-
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "fridge_ingredient",
+            joinColumns = @JoinColumn(name = "fridge_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    List<Ingredient> fridgeIngredients = new ArrayList<Ingredient>();
 
 
 }

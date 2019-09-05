@@ -86,5 +86,22 @@ public class IngredientController {
         }
     }
 
+    @GetMapping("/ingredients/category/{categoryId}")
+    public ResponseEntity<Optional<List<Ingredient>>> getIngredientsByCategory(@PathVariable long categoryId)
+    {
+        Category category = categoryService.getCategoryById(categoryId).get();
+
+        if(category != null)
+        {
+            if(!ingredientSerivce.getIngredientsByCategory(category).isPresent())
+            return ResponseEntity.noContent().build();
+
+            return new ResponseEntity<>(ingredientSerivce.getIngredientsByCategory(category),HttpStatus.OK);
+        }
+
+        return  ResponseEntity.noContent().build();
+
+
+    }
 
 }

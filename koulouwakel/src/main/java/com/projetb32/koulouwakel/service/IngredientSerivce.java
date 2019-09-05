@@ -58,4 +58,10 @@ public class IngredientSerivce {
 
     }
 
+
+    public Optional<List<Ingredient>> getIngredientsByCategory(Category category)
+    {
+      return   IngredientRepository.findIngredientByCategory(category);
+    }
+
 }

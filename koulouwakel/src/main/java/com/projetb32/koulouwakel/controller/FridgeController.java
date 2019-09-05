@@ -2,6 +2,9 @@ package com.projetb32.koulouwakel.controller;
 
 
 import com.projetb32.koulouwakel.entity.Fridge;
+import com.projetb32.koulouwakel.entity.Ingredient;
+import com.projetb32.koulouwakel.entity.User;
+import com.projetb32.koulouwakel.repository.UserRepository;
 import com.projetb32.koulouwakel.service.FridgeService;
 import com.projetb32.koulouwakel.service.UserPrinciple;
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ public class FridgeController {
 
     @Autowired
     private FridgeService fridgeService ;
+
 
 
     private UserPrinciple userPrinciple ;
@@ -48,6 +52,17 @@ public class FridgeController {
             return new ResponseEntity<>(fridgeService.getFridgeById(Long.parseLong(fridgeId)), HttpStatus.OK);
         }
     }
+
+    @GetMapping("/fridges/user/{userId}")
+    public ResponseEntity<Optional<List<Fridge>>> retrieveFridgesByUserId(@PathVariable long userId) {
+
+        if (!fridgeService.getFridgeByUserId(userId).isPresent()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(fridgeService.getFridgeByUserId(userId), HttpStatus.OK);
+        }
+    }
+
 
     @PostMapping("/fridge/{userId}")
     public ResponseEntity<Fridge> addIngredient(@RequestBody Fridge fridge,@PathVariable long userId  ) {
@@ -75,13 +90,44 @@ public class FridgeController {
         } else {
             return ResponseEntity.noContent().build();
         }
+
+    }
+        /* fridge ingredient */
+
+        @PostMapping("/fridgeingredient/{ingredientId}/{fridgeId}")
+        public ResponseEntity<Fridge> addIngredientToFridge(@PathVariable long ingredientId, @PathVariable long fridgeId)
+        {
+            Fridge fridgeLocal = fridgeService.addIngredientToFridge(ingredientId,fridgeId);
+
+            if (fridgeLocal == null) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
+            }
+        }
+
+
+    @PostMapping("/fridgeingredient/{fridgeId}")
+    public /*ResponseEntity<Fridge>*/ void addIngredientToFridge(@RequestBody Ingredient [] ingredients, @PathVariable long fridgeId)
+    {
+        log.info("wwwww   ========"+ingredients.toString());
+      //  Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
+
+       /* if (fridgeLocal == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
+        }*/
     }
 
+        @GetMapping("/fridgeingredient")
+        public String[] getAllFridgeIngredient()
+        {
+            return fridgeService.getAllFridgeIngredient();
+        }
 
 
 
 
 
-
-
-}
+    }
