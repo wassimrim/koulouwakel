@@ -53,13 +53,24 @@ public class FridgeController {
         }
     }
 
-    @GetMapping("/fridges/user/{userId}")
+    @GetMapping("/fridges/userId/{userId}")
     public ResponseEntity<Optional<List<Fridge>>> retrieveFridgesByUserId(@PathVariable long userId) {
 
         if (!fridgeService.getFridgeByUserId(userId).isPresent()) {
             return ResponseEntity.noContent().build();
         } else {
             return new ResponseEntity<>(fridgeService.getFridgeByUserId(userId), HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping("/fridges/userName/{userName}")
+    public ResponseEntity<Optional<List<Fridge>>> retrieveFridgesByUserName(@PathVariable String userName) {
+
+        if (!fridgeService.getFridgeByUserName(userName).isPresent()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(fridgeService.getFridgeByUserName(userName), HttpStatus.OK);
         }
     }
 
@@ -108,9 +119,9 @@ public class FridgeController {
 
 
     @PostMapping("/fridgeingredient/{fridgeId}")
-    public /*ResponseEntity<Fridge>*/ void addIngredientToFridge(@RequestBody Ingredient [] ingredients, @PathVariable long fridgeId)
+    public /*ResponseEntity<Fridge>*/ void addIngredientToFridge(@RequestBody  Ingredient ingredient, @PathVariable long fridgeId)
     {
-        log.info("wwwww   ========"+ingredients.toString());
+     //   log.info("wwwww   ========"+ingredients.toString());
       //  Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
 
        /* if (fridgeLocal == null) {

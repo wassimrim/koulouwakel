@@ -64,6 +64,13 @@ public class FridgeService {
         return   fridgeRepository.findFridgeByUser(user);
     }
 
+    public Optional<List<Fridge>> getFridgeByUserName(String userName)
+    {
+        User user = userRepository.findByUsername(userName).get();
+        return   fridgeRepository.findFridgeByUser(user);
+    }
+
+
     /* fridgeingredient */
     public Fridge addIngredientToFridge(Long idIngredient , Long idFridge)
     {
@@ -75,6 +82,7 @@ public class FridgeService {
 
         return fridgeRepository.save(fridge);
     }
+  //  public Fridge addIngredientToFridgeByUserName
 
     public Fridge addIngredientsToFridge(long[] idIngredients , long idFridge)
     {
