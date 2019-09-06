@@ -3,6 +3,7 @@ package com.projetb32.koulouwakel.controller;
 
 import com.projetb32.koulouwakel.entity.Fridge;
 import com.projetb32.koulouwakel.entity.Ingredient;
+import com.projetb32.koulouwakel.entity.Ingredients;
 import com.projetb32.koulouwakel.entity.User;
 import com.projetb32.koulouwakel.repository.UserRepository;
 import com.projetb32.koulouwakel.service.FridgeService;
@@ -119,16 +120,16 @@ public class FridgeController {
 
 
     @PostMapping("/fridgeingredient/{fridgeId}")
-    public /*ResponseEntity<Fridge>*/ void addIngredientToFridge(@RequestBody  Ingredient ingredient, @PathVariable long fridgeId)
+    public ResponseEntity<Fridge>  addIngredientToFridge(@RequestBody Ingredients ingredients, @PathVariable long fridgeId)
     {
-     //   log.info("wwwww   ========"+ingredients.toString());
-      //  Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
+       // log.info("wwwww   ========"+ingredients.getIngredients()[0].toString());
+        Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
 
-       /* if (fridgeLocal == null) {
+        if (fridgeLocal == null) {
             return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
-        }*/
+            return new ResponseEntity<>(fridgeService.addIngredientsToFridge(ingredients,fridgeId), HttpStatus.OK);
+        }
     }
 
         @GetMapping("/fridgeingredient")

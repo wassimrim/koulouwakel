@@ -42,7 +42,7 @@ public class RecipeController {
 
     }
 
-    @GetMapping("/recipes/{recipeId}")
+    @GetMapping("/recipes/recipeid/{recipeId}")
     public ResponseEntity<Optional<Recipe>> retreiveRecipeById(@PathVariable String recipeId) {
 
 
@@ -54,7 +54,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/recipes/{recipeDifficulty}")
+    @GetMapping("/recipes/recipedifficulty/{recipeDifficulty}")
     public ResponseEntity<Optional<Recipe>> retreiveRecipeByDifficulty(@PathVariable String recipeDifficulty) {
 
 
@@ -66,7 +66,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/recipes/{recipeTitle}")
+    @GetMapping("/recipes/recipetitle/{recipeTitle}")
     public ResponseEntity<Optional<Recipe>> retreiveRecipeByTitle(@PathVariable String recipeTitle) {
 
 

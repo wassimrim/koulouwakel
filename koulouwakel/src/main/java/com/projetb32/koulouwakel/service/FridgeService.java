@@ -2,6 +2,7 @@ package com.projetb32.koulouwakel.service;
 
 import com.projetb32.koulouwakel.entity.Fridge;
 import com.projetb32.koulouwakel.entity.Ingredient;
+import com.projetb32.koulouwakel.entity.Ingredients;
 import com.projetb32.koulouwakel.entity.User;
 import com.projetb32.koulouwakel.repository.FridgeRepository;
 import com.projetb32.koulouwakel.repository.IngredientRepository;
@@ -84,14 +85,14 @@ public class FridgeService {
     }
   //  public Fridge addIngredientToFridgeByUserName
 
-    public Fridge addIngredientsToFridge(long[] idIngredients , long idFridge)
+    public Fridge addIngredientsToFridge(Ingredients ingredients , long idFridge)
     {
         Ingredient ingredient = null;
         Fridge fridge = null;
         fridge = fridgeRepository.findById(idFridge).get();
-        for( int i =0; i<= idIngredients.length;i++)
+        for( int i = 0; i< ingredients.getIngredientIDs().length;i++)
         {
-            ingredient = ingredientRepository.findById(idIngredients[i]).get();
+            ingredient = ingredientRepository.findById(ingredients.getIngredientIDs()[i]).get();
             fridge.getFridgeIngredients().add(ingredient);
         }
 
