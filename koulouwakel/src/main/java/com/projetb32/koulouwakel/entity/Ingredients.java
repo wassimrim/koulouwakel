@@ -2,14 +2,14 @@ package com.projetb32.koulouwakel.entity;
 
 public class Ingredients {
 
-    private long [] ingredientIDs;
+    private Ingredient [] ingredients;
 
-    public long[] getIngredientIDs() {
-        return ingredientIDs;
+    public Ingredient[] getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientIDs(long[] ingredientIDs) {
-        this.ingredientIDs = ingredientIDs;
+    public void setIngredient(Ingredient[] ingredients) {
+        this.ingredients = ingredients;
     }
 }
 

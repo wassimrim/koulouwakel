@@ -90,9 +90,9 @@ public class FridgeService {
         Ingredient ingredient = null;
         Fridge fridge = null;
         fridge = fridgeRepository.findById(idFridge).get();
-        for( int i = 0; i< ingredients.getIngredientIDs().length;i++)
+        for( int i =0; i<= ingredients.getIngredients().length;i++)
         {
-            ingredient = ingredientRepository.findById(ingredients.getIngredientIDs()[i]).get();
+            ingredient = ingredientRepository.findById(ingredients.getIngredients()[i].getId()).get();
             fridge.getFridgeIngredients().add(ingredient);
         }
 

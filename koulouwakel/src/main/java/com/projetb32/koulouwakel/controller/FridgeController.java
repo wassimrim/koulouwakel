@@ -120,16 +120,17 @@ public class FridgeController {
 
 
     @PostMapping("/fridgeingredient/{fridgeId}")
-    public ResponseEntity<Fridge>  addIngredientToFridge(@RequestBody Ingredients ingredients, @PathVariable long fridgeId)
+    public /*ResponseEntity<Fridge> */ void addIngredientToFridge(@RequestBody Ingredients ingredients, @PathVariable long fridgeId)
     {
-       // log.info("wwwww   ========"+ingredients.getIngredients()[0].toString());
-        Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
+        log.info("zzzzzzzzzz "+ ingredients.getIngredients());
 
-        if (fridgeLocal == null) {
-            return ResponseEntity.noContent().build();
+     //   Fridge fridgeLocal = fridgeService.addIngredientsToFridge(ingredients,fridgeId);
+
+     /*   if (fridgeLocal == null) {
+         //   return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(fridgeService.addIngredientsToFridge(ingredients,fridgeId), HttpStatus.OK);
-        }
+         //   return new ResponseEntity<>(fridgeService.addIngredientsToFridge(ingredients,fridgeId), HttpStatus.OK);
+        }*/
     }
 
         @GetMapping("/fridgeingredient")

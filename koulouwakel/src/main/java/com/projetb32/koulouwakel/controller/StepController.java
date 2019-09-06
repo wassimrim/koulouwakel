@@ -39,7 +39,7 @@ public class StepController {
 
     }
 
-    @GetMapping("/Step/{stepId}")
+    @GetMapping("/Step/stepid/{stepId}")
     public ResponseEntity<Optional<Step>> retreiveStepById(@PathVariable String stepId) {
 
 
@@ -52,7 +52,7 @@ public class StepController {
 
 
 
-    @GetMapping("/Step/{recipeId}")
+    @GetMapping("/Step/recipeid/{recipeId}")
     public ResponseEntity<Optional<Step>> retreiveStepByRecipeId(@PathVariable String recipeId) {
 
 
