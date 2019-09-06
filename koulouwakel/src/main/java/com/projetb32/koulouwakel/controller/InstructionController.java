@@ -44,7 +44,7 @@ public class InstructionController {
 
     }
 
-    @GetMapping("/instructions/{instructionId}")
+    @GetMapping("/instructions/instructionid/{instructionId}")
     public ResponseEntity<Optional<Instruction>> retreiveInstructionById(@PathVariable String instructionId) {
 
 
@@ -54,6 +54,17 @@ public class InstructionController {
             return new ResponseEntity<>(instructionService.getInstructionById(Long.parseLong(instructionId)), HttpStatus.OK);
         }
     }
+    @GetMapping("/instructions/stepid/{stepId}")
+    public ResponseEntity<Optional<List<Instruction>>> retreiveInstructionByStepId(@PathVariable String stepId) {
+
+
+        if (!stepService.getStepById(Long.parseLong(stepId)).isPresent()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return new ResponseEntity<>(instructionService.getInstructionByStepId(Long.parseLong(stepId)), HttpStatus.OK);
+        }
+    }
+
 
     @PostMapping("/instructions/{ingredient_id}/{step_id}")
     public ResponseEntity<Instruction> addInstruction(@RequestBody Instruction instruction,@PathVariable long ingredient_id,@PathVariable long step_id) {

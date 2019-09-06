@@ -48,7 +48,7 @@ public class InstructionService {
         return instructionRepository.findAll();
     }
 
-    public Optional<Instruction> getInstructionById(Long id) {
+       public Optional<Instruction> getInstructionById(Long id) {
 
         return instructionRepository.findById(id);
 
@@ -60,6 +60,14 @@ public class InstructionService {
         instructionRepository.deleteById(id);
 
     }
+    public Optional<List<Instruction>> getInstructionByStepId(Long id) {
+
+        return instructionRepository.findInstructionByStep_Id(id);
+
+    }
+
+
+
 
 
 }
