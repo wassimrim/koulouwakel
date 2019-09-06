@@ -53,7 +53,7 @@ public class StepController {
 
 
     @GetMapping("/Step/recipeid/{recipeId}")
-    public ResponseEntity<Optional<Step>> retreiveStepByRecipeId(@PathVariable String recipeId) {
+    public ResponseEntity<Optional<List<Step>>> retreiveStepByRecipeId(@PathVariable String recipeId) {
 
 
         if (!stepService.getStepByRecipeId(Long.parseLong(recipeId)).isPresent()) {

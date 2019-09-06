@@ -36,4 +36,17 @@ public class Fridge implements Serializable {
     List<Ingredient> fridgeIngredients = new ArrayList<Ingredient>();
 
 
+  /*  @ManyToMany(fetch = FetchType.EAGER, cascade ={ CascadeType.MERGE})
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "firdge_id")},
+            inverseJoinColumns = {@JoinColumn(name = "ingredient_id")},
+            uniqueConstraints = {@UniqueConstraint(
+                    columnNames = {"firdge_id", "ingredient_id"})}
+    )
+    private List<Ingredient> ingredients = new ArrayList<>();*/
+
+
+
+
+
 }

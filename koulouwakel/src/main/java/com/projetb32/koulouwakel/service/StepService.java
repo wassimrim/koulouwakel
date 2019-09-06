@@ -47,7 +47,7 @@ public class StepService {
 
     }
 
-    public Optional<Step> getStepByRecipeId(Long recipe_id) {
+    public Optional<List<Step>> getStepByRecipeId(Long recipe_id) {
 
         return stepRepository.findByRecipe_Id(recipe_id);
     }
