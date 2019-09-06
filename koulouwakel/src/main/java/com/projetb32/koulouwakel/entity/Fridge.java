@@ -27,23 +27,23 @@ public class Fridge implements Serializable {
     @JoinColumn(name = "user_id")
     private User user ;
 
-    @JsonIgnore
+  /*  @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "fridge_ingredient",
             joinColumns = @JoinColumn(name = "fridge_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    List<Ingredient> fridgeIngredients = new ArrayList<Ingredient>();
+    List<Ingredient> fridgeIngredients = new ArrayList<Ingredient>();*/
 
-
-  /*  @ManyToMany(fetch = FetchType.EAGER, cascade ={ CascadeType.MERGE})
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade ={ CascadeType.MERGE})
     @JoinTable(
-            joinColumns = {@JoinColumn(name = "firdge_id")},
+            joinColumns = {@JoinColumn(name = "fridge_id")},
             inverseJoinColumns = {@JoinColumn(name = "ingredient_id")},
             uniqueConstraints = {@UniqueConstraint(
-                    columnNames = {"firdge_id", "ingredient_id"})}
+                    columnNames = {"fridge_id", "ingredient_id"})}
     )
-    private List<Ingredient> ingredients = new ArrayList<>();*/
+    private List<Ingredient> fridgeIngredients = new ArrayList<>();
 
 
 

@@ -65,6 +65,8 @@ public class PictureController {
 
 
 
+
+
     @PostMapping("/pictures")
     public ResponseEntity<Picture> addPicture( @RequestBody MultipartFile file) {
 
