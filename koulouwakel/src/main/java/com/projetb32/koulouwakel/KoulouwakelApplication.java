@@ -1,10 +1,12 @@
 package com.projetb32.koulouwakel;
 
 import com.projetb32.koulouwakel.entity.Fridge;
+import com.projetb32.koulouwakel.entity.FridgeIngredientGroup;
 import com.projetb32.koulouwakel.entity.Ingredient;
 import com.projetb32.koulouwakel.repository.FridgeRepository;
 import com.projetb32.koulouwakel.repository.IngredientRepository;
 import com.projetb32.koulouwakel.repository.UserRepository;
+import com.projetb32.koulouwakel.service.FridgeIngredientGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,10 @@ import java.util.List;
 @SpringBootApplication
 public class KoulouwakelApplication {
 
-    @Autowired
-    private FridgeRepository fridgeRepository;
-
-    private static final Logger log = LoggerFactory.getLogger(KoulouwakelApplication.class);
+//    @Autowired
+//    private FridgeRepository fridgeRepository;
+//
+//    private static final Logger log = LoggerFactory.getLogger(KoulouwakelApplication.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -31,6 +33,12 @@ public class KoulouwakelApplication {
      /* KoulouwakelApplication k = new KoulouwakelApplication();
       k.run();*/
 
+    }
+    @Bean
+    CommandLineRunner start (FridgeIngredientGroupService  fridgeIngredientGroupService){
+       FridgeIngredientGroup fridgeIngredientGroup= fridgeIngredientGroupService.addIngredientToFridge(Long.valueOf(1),Long.valueOf(1));
+          System.out.println("ahahahahaaha"+fridgeIngredientGroup.getPrimaryKey());
+       return null;
     }
 
 

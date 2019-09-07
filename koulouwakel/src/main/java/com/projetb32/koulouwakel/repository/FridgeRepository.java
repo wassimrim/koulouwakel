@@ -22,8 +22,8 @@ public interface FridgeRepository extends JpaRepository<Fridge, Long> {
     public Optional<Fridge> findById(Long id);
 
 
-    @Query("select f.id  ,fi.id from Fridge f Join f.fridgeIngredients fi  ")
-    public String[] findAllFridgeIngredient();
+//    @Query("select f.id  ,fi.id from Fridge f Join f.fridgeIngredients fi  ")
+//    public String[] findAllFridgeIngredient();
 
 
     public Optional<List<Fridge>> findFridgeByUser(User user);

@@ -63,5 +63,11 @@ public class IngredientSerivce {
     {
       return   IngredientRepository.findIngredientByCategory(category);
     }
+    public  List<Ingredient>findIngredientByCategorie(String nameCatgorie){
+        Category category = categoryRepository.findBytype(nameCatgorie).get();
+
+
+        return  IngredientRepository.findByCategory(category) ;
+    }
 
 }

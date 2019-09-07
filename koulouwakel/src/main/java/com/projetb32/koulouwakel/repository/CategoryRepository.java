@@ -11,4 +11,5 @@ import java.util.Optional;
 @RepositoryRestResource(path="category",collectionResourceRel="category")
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findBytype(String type);
+
 }

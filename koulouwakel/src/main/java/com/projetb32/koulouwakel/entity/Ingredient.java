@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,8 +37,21 @@ public class Ingredient implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category ;
 
+// relation  one to many  with firdgeIngredientId
+@OneToMany(fetch = FetchType.LAZY,mappedBy = "primaryKey.ingredient")
+    private  Set<FridgeIngredientGroup>fridgeIngredientGroups = new HashSet<FridgeIngredientGroup>(0);
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "fridgeIngredients")
-    List<Fridge> fridges;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "fridgeIngredients")
+//    List<Fridge> fridges;
+
+
+    public Set<FridgeIngredientGroup> getFridgeIngredientGroups() {
+        return fridgeIngredientGroups;
+    }
+
+    public void setFridgeIngredientGroups(Set<FridgeIngredientGroup> fridgeIngredientGroups) {
+        this.fridgeIngredientGroups = fridgeIngredientGroups;
+    }
 }
+

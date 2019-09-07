@@ -72,37 +72,37 @@ public class FridgeService {
     }
 
 
-    /* fridgeingredient */
-    public Fridge addIngredientToFridge(Long idIngredient , Long idFridge)
-    {
-        Ingredient ingredient = ingredientRepository.findById(idIngredient).get();
+//    /* fridgeingredient */
+//    public Fridge addIngredientToFridge(Long idIngredient , Long idFridge)
+//    {
+//        Ingredient ingredient = ingredientRepository.findById(idIngredient).get();
+//
+//        Fridge fridge = fridgeRepository.findById(idFridge).get();
+//
+//       // fridge.getFridgeIngredients().add(ingredient);
+//
+//        return fridgeRepository.save(fridge);
+//    }
+//  //  public Fridge addIngredientToFridgeByUserName
+//
+//    public Fridge addIngredientsToFridge(Ingredients ingredients , long idFridge)
+//    {
+//        Ingredient ingredient = null;
+//        Fridge fridge = null;
+//        fridge = fridgeRepository.findById(idFridge).get();
+//        for( int i =0; i< ingredients.getIngredients().length;i++)
+//        {
+//            ingredient = ingredientRepository.findById(ingredients.getIngredients()[i].getId()).get();
+//         //   fridge.getFridgeIngredients().add(ingredient);
+//        }
+//
+//        return fridgeRepository.save(fridge);
+//    }
 
-        Fridge fridge = fridgeRepository.findById(idFridge).get();
-
-        fridge.getFridgeIngredients().add(ingredient);
-
-        return fridgeRepository.save(fridge);
-    }
-  //  public Fridge addIngredientToFridgeByUserName
-
-    public Fridge addIngredientsToFridge(Ingredients ingredients , long idFridge)
-    {
-        Ingredient ingredient = null;
-        Fridge fridge = null;
-        fridge = fridgeRepository.findById(idFridge).get();
-        for( int i =0; i< ingredients.getIngredients().length;i++)
-        {
-            ingredient = ingredientRepository.findById(ingredients.getIngredients()[i].getId()).get();
-            fridge.getFridgeIngredients().add(ingredient);
-        }
-
-        return fridgeRepository.save(fridge);
-    }
-
-    public String[] getAllFridgeIngredient()
-    {
-        return fridgeRepository.findAllFridgeIngredient();
-    }
+//    public String[] getAllFridgeIngredient()
+//    {
+//        return fridgeRepository.findAllFridgeIngredient();
+//    }
 
 
 }
