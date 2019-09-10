@@ -45,7 +45,8 @@ public class Fridge implements Serializable {
 //                    columnNames = {"fridge_id", "ingredient_id"})}
 //    )
 //    private List<Ingredient> fridgeIngredients = new ArrayList<>();
-@OneToMany(fetch = FetchType.LAZY,mappedBy = "primaryKey.fridge" )
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "primaryKey.fridge" )
 
     private  Set<FridgeIngredientGroup>fridgeIngredientGroups = new HashSet<FridgeIngredientGroup>(0);
 

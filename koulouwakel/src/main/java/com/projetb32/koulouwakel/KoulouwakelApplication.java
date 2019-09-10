@@ -34,12 +34,12 @@ public class KoulouwakelApplication {
       k.run();*/
 
     }
-    @Bean
+   /* @Bean
     CommandLineRunner start (FridgeIngredientGroupService  fridgeIngredientGroupService){
        FridgeIngredientGroup fridgeIngredientGroup= fridgeIngredientGroupService.addIngredientToFridge(Long.valueOf(1),Long.valueOf(1));
           System.out.println("ahahahahaaha"+fridgeIngredientGroup.getPrimaryKey());
        return null;
-    }
+    }*/
 
 
     /*public void run(String [] args) throws Exception {

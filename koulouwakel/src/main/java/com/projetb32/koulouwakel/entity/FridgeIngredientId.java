@@ -1,18 +1,30 @@
 package com.projetb32.koulouwakel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
 public class FridgeIngredientId implements Serializable {
 
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
     @JoinColumn(name = "fridge_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Fridge fridge ;
+
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER , cascade= CascadeType.ALL)
     @JoinColumn(name = "ingredient_id", referencedColumnName = "id", insertable = false, updatable = false)
     private  Ingredient ingredient ;
 
+    public FridgeIngredientId() {
+    }
+
+    public FridgeIngredientId(Fridge fridge, Ingredient ingredient) {
+        this.fridge = fridge;
+        this.ingredient = ingredient;
+    }
 
     public Fridge getFridge() {
         return fridge;

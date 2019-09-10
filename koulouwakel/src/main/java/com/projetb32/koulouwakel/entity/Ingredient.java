@@ -38,7 +38,8 @@ public class Ingredient implements Serializable {
     private Category category ;
 
 // relation  one to many  with firdgeIngredientId
-@OneToMany(fetch = FetchType.LAZY,mappedBy = "primaryKey.ingredient")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "primaryKey.ingredient")
     private  Set<FridgeIngredientGroup>fridgeIngredientGroups = new HashSet<FridgeIngredientGroup>(0);
 
 //    @JsonIgnore
