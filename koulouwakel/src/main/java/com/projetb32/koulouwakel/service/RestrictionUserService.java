@@ -7,6 +7,7 @@ import com.projetb32.koulouwakel.repository.CategoryRepository;
 import com.projetb32.koulouwakel.repository.RestrictionRepository;
 import com.projetb32.koulouwakel.repository.RestrictionUserRepository;
 import com.projetb32.koulouwakel.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,18 +16,14 @@ import java.util.Optional;
 @Component
 public class RestrictionUserService {
 
+@Autowired
+    private  RestrictionRepository restrictionRepository;
+@Autowired
+    private  RestrictionUserRepository restrictionUserRepository;
+@Autowired
+    private  UserRepository userRepository;
 
-    private final RestrictionRepository restrictionRepository;
 
-    private final RestrictionUserRepository restrictionUserRepository;
-
-    private final UserRepository userRepository;
-
-    public RestrictionUserService(RestrictionRepository restrictionRepository, RestrictionUserRepository restrictionUserRepository,   UserRepository userRepository) {
-        this.restrictionRepository = restrictionRepository;
-        this.restrictionUserRepository = restrictionUserRepository;
-        this.userRepository = userRepository;
-     }
 
 
     public ConstraintUser addRestrictionUser(  long user_id,long restriction_id ) {
@@ -45,14 +42,6 @@ public class RestrictionUserService {
 
         return restrictionUserRepository.findAll();
     }
-
-    public Optional<ConstraintUser> getRestrictionUserById(Long id) {
-
-        return restrictionUserRepository.findById(id);
-
-    }
-
-
 
     public void deleteRestrictionUser(Long user_id,Long restrictiontId) {
 

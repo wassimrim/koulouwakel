@@ -23,74 +23,64 @@ public class StepController {
 
 
     @Autowired
-    private StepService stepService ;
+    private StepService stepService;
 
-    @Autowired
-    private RecipeService recipeService ;
-
+    ;
 
     @GetMapping("/step")
     public ResponseEntity<List<Step>> retreiveStep() {
 
-        if (stepService.getAllStep().isEmpty())
+        List<Step> stepList = null;
+        stepList = stepService.getAllStep();
+        if (stepList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(stepService.getAllStep(), HttpStatus.OK);
+        return new ResponseEntity<>(stepList, HttpStatus.OK);
 
     }
 
-    @GetMapping("/Step/stepid/{stepId}")
-    public ResponseEntity<Optional<Step>> retreiveStepById(@PathVariable String stepId) {
+    @GetMapping("/step/stepid/{stepId}")
+    public ResponseEntity<Optional<Step>> retreiveStepById(@PathVariable long stepId) {
 
+        Optional<Step> stepList = null;
 
-        if (!stepService.getStepById(Long.parseLong(stepId)).isPresent()) {
+        stepList = stepService.getStepById(stepId);
+        if (!stepList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(stepService.getStepById(Long.parseLong(stepId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(stepList, HttpStatus.OK);
+
     }
 
 
+    @GetMapping("/step/recipeid/{recipeId}")
+    public ResponseEntity<List<Step>> retreiveStepByRecipeId(@PathVariable long recipeId) {
 
-    @GetMapping("/Step/recipeid/{recipeId}")
-    public ResponseEntity<Optional<List<Step>>> retreiveStepByRecipeId(@PathVariable String recipeId) {
-
-
-        if (!stepService.getStepByRecipeId(Long.parseLong(recipeId)).isPresent()) {
+        List<Step> stepList = null;
+        stepList = stepService.getStepByRecipeId(recipeId);
+        if (stepList == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(stepService.getStepByRecipeId(Long.parseLong(recipeId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(stepList, HttpStatus.OK);
     }
-
 
 
     @PostMapping("/step/{recipeId}")
-    public ResponseEntity<Step> addStep(@RequestBody Step step, @PathVariable long recipeId  ) {
+    public ResponseEntity<Step> addStep(@RequestBody Step step, @PathVariable long recipeId) {
 
 
-        Step stepLocal = stepService.addStep(step,recipeId);
+        Step stepLocal = stepService.addStep(step, recipeId);
 
-        if (stepLocal == null) {
+        if (stepLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(stepLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(stepLocal, HttpStatus.OK);
+
     }
 
 
     @DeleteMapping("/step/{stepId}")
-    public ResponseEntity<Step> deleteStep(@PathVariable String stepId) {
+    public ResponseEntity<Step> deleteStep(@PathVariable long stepId) {
+        stepService.deleteStep(stepId);
+        return ResponseEntity.accepted().build();
 
-        if (stepService.getStepById(Long.parseLong(stepId)).isPresent()) {
 
-            stepService.deleteStep(Long.parseLong(stepId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
 
 }

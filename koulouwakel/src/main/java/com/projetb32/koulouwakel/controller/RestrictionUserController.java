@@ -23,59 +23,41 @@ public class RestrictionUserController {
     private static final Logger log = LoggerFactory.getLogger(RestrictionCategoryController.class);
 
 
+
+
     @Autowired
-    private RestrictionService restrictionService ;
-
-    @Autowired
-    private RestrictionUserService restrictionUserService ;
-
-
-    private UserPrinciple userPrinciple ;
-
+    private RestrictionUserService restrictionUserService;
 
     @GetMapping("/restrictionuser")
-    public ResponseEntity<List<ConstraintUser>> retreiveRestrictiontags() {
-
-        if (restrictionUserService.getAllRestrictionUser().isEmpty())
+    public ResponseEntity<List<ConstraintUser>> retreiveRestrictionUsers() {
+        List<ConstraintUser> constraintUserList = null;
+        constraintUserList = restrictionUserService.getAllRestrictionUser();
+        if (constraintUserList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(restrictionUserService.getAllRestrictionUser(), HttpStatus.OK);
-
+        return new ResponseEntity<>(constraintUserList, HttpStatus.OK);
     }
-
 
 
     @PostMapping("/restrictionuser/{userId}/{restrictionId}")
-    public ResponseEntity<ConstraintUser> addIngredient( @PathVariable long userId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintUser> addRestrictionUser(@PathVariable long userId, @PathVariable long restrictionId) {
 
 
-        ConstraintUser restrictionLocal = restrictionUserService.addRestrictionUser(userId,restrictionId);
+        ConstraintUser restrictionLocal = restrictionUserService.addRestrictionUser(userId, restrictionId);
 
-        if (restrictionLocal == null) {
+        if (restrictionLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
+
     }
-
-
 
 
     @DeleteMapping("/restrictionuser/{userId}/{restrictionId}")
-    public ResponseEntity<ConstraintUser> deleteIngredient( @PathVariable long userId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintUser> deleteRestrictionUser(@PathVariable long userId, @PathVariable long restrictionId) {
+        restrictionUserService.deleteRestrictionUser(userId, restrictionId);
+        return ResponseEntity.accepted().build();
 
-        if (restrictionService.getRestrictionById(restrictionId).isPresent()) {
 
-            restrictionUserService.deleteRestrictionUser(userId,restrictionId);
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
-
-
 
 
 }

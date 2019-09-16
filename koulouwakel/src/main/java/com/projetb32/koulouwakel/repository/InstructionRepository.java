@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface InstructionRepository extends JpaRepository <Instruction,Long> {
 
-    public Optional<List<Instruction>>  findInstructionByStep_Id(long id);
+    public List<Instruction> findInstructionByStep_Id(long id);
 
 }

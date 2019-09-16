@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,123 +25,73 @@ import java.util.Optional;
 public class FridgeController {
     private static final Logger log = LoggerFactory.getLogger(IngredientController.class);
 
-
     @Autowired
-    private FridgeService fridgeService ;
+    private FridgeService fridgeService;
 
 
 
-    private UserPrinciple userPrinciple ;
-
-
-    @GetMapping("/fridge")
+  /*  @GetMapping("/fridge")
     public ResponseEntity<List<Fridge>> retreiveFridge() {
-
-        if (fridgeService.getAllFridge().isEmpty())
+        List<Fridge> fridgeList = null;
+        fridgeList = fridgeService.getAllFridge();
+        if (fridgeList.isEmpty())
             return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(fridgeList, HttpStatus.OK);
 
-        return new ResponseEntity<>(fridgeService.getAllFridge(), HttpStatus.OK);
+    }*/
+
+    @GetMapping("/fridge/{fridgeId}") /* cette methode presente une faille de securité  on doit la modifier*/
+    public ResponseEntity<Optional<Fridge>> retreiveFridgeById(@PathVariable long fridgeId) {
+
+        Optional<Fridge> fridgeList = null;
+        fridgeList = fridgeService.getFridgeById(fridgeId);
+        if (!fridgeList.isPresent())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(fridgeList, HttpStatus.OK);
 
     }
 
-    @GetMapping("/fridge/{fridgeId}")
-    public ResponseEntity<Optional<Fridge>> retreiveFridgeById(@PathVariable String fridgeId) {
+    @GetMapping("/fridge/userId/{userId}")
+    public ResponseEntity<List<Fridge>> retrieveFridgesByUserId(@PathVariable long userId) {
 
+        List<Fridge> fridgeList = null;
+        fridgeList = fridgeService.getFridgeByUserId(userId);
 
-        if (!fridgeService.getFridgeById(Long.parseLong(fridgeId)).isPresent()) {
+        if (fridgeList == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(fridgeService.getFridgeById(Long.parseLong(fridgeId)), HttpStatus.OK);
-        }
-    }
+        return new ResponseEntity<>(fridgeService.getFridgeByUserId(userId), HttpStatus.OK);
 
-    @GetMapping("/fridges/userId/{userId}")
-    public ResponseEntity<Optional<List<Fridge>>> retrieveFridgesByUserId(@PathVariable long userId) {
-
-        if (!fridgeService.getFridgeByUserId(userId).isPresent()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(fridgeService.getFridgeByUserId(userId), HttpStatus.OK);
-        }
     }
 
 
-    @GetMapping("/fridges/userName/{userName}")
-    public ResponseEntity<Optional<List<Fridge>>> retrieveFridgesByUserName(@PathVariable String userName) {
-
-        if (!fridgeService.getFridgeByUserName(userName).isPresent()) {
+    @GetMapping("/fridge/userName/{userName}")
+    public ResponseEntity<List<Fridge>> retrieveFridgesByUserName(@PathVariable String userName) {
+        List<Fridge> fridgeList = null;
+        fridgeList = fridgeService.getFridgeByUserName(userName);
+        if (fridgeList == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(fridgeService.getFridgeByUserName(userName), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(fridgeService.getFridgeByUserName(userName), HttpStatus.OK);
+
     }
 
 
     @PostMapping("/fridge/{userId}")
-    public ResponseEntity<Fridge> addIngredient(@RequestBody Fridge fridge,@PathVariable long userId  ) {
+    public ResponseEntity<Fridge> addIngredient(@RequestBody Fridge fridge, @PathVariable long userId) {
 
 
-        Fridge fridgeLocal = fridgeService.addFridge(fridge,userId);
+        Fridge fridgeLocal = fridgeService.addFridge(fridge, userId);
 
-        if (fridgeLocal == null) {
+        if (fridgeLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
+
     }
 
 
     @DeleteMapping("/fridge/{fridgeId}")
-    public ResponseEntity<Fridge> deleteIngredient(@PathVariable String fridgeId) {
-
-        if (fridgeService.getFridgeById(Long.parseLong(fridgeId)).isPresent()) {
-
-            fridgeService.deleteFridge(Long.parseLong(fridgeId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<Fridge> deleteIngredient(@PathVariable long fridgeId) {
+        fridgeService.deleteFridge(fridgeId);
+        return ResponseEntity.noContent().build();
 
     }
-        /* fridge ingredient */
-
-//        @PostMapping("/fridgeingredient/{ingredientId}/{fridgeId}")
-//        public ResponseEntity<Fridge> addIngredientToFridge(@PathVariable long ingredientId, @PathVariable long fridgeId)
-//        {
-//            Fridge fridgeLocal = fridgeService.addIngredientToFridge(ingredientId,fridgeId);
-//
-//            if (fridgeLocal == null) {
-//                return ResponseEntity.noContent().build();
-//            } else {
-//                return new ResponseEntity<>(fridgeLocal, HttpStatus.OK);
-//            }
-//        }
-
-//
-//    @PostMapping("/fridgeingredient/{fridgeId}")
-//    public ResponseEntity<Fridge> addIngredientToFridge(@RequestBody Ingredients ingredients, @PathVariable long fridgeId)
-//    {
-//        log.info("zzzzzzzzzz "+ ingredients.getIngredients());
-//
-//        Fridge fridgeLocal = fridgeService.getFridgeById(fridgeId).get();
-//
-//        if (fridgeLocal == null) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return new ResponseEntity<>(fridgeService.addIngredientsToFridge(ingredients,fridgeId), HttpStatus.OK);
-//        }
-//    }
-
-//        @GetMapping("/fridgeingredient")
-//        public String[] getAllFridgeIngredient()
-//        {
-//            return fridgeService.getAllFridgeIngredient();
-//        }
-
-
-
-
-
-    }
+}

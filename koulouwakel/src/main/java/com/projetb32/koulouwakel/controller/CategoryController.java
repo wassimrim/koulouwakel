@@ -2,6 +2,7 @@ package com.projetb32.koulouwakel.controller;
 
 
 import com.projetb32.koulouwakel.entity.Category;
+import com.projetb32.koulouwakel.entity.Recipe;
 import com.projetb32.koulouwakel.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,82 +18,63 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/application")
 public class CategoryController {
-    private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
-    private CategoryService categoryService ;
+    private CategoryService categoryService;
 
 
     @GetMapping("/categorys")
     public ResponseEntity<List<Category>> retreivePictures() {
 
-        if (categoryService.getAllCategory().isEmpty())
+        List<Category> categoryList = null;
+        categoryList = categoryService.getAllCategory();
+        if (categoryList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(categoryService.getAllCategory(), HttpStatus.OK);
+        return new ResponseEntity<>(categoryList, HttpStatus.OK);
 
     }
 
     @GetMapping("/categorys/{categoryId}")
-    public ResponseEntity<Optional<Category>> retreiveCategoryById(@PathVariable String categoryId) {
+    public ResponseEntity<Optional<Category>> retreiveCategoryById(@PathVariable long categoryId) {
+        Optional<Category> categoryList;
+        categoryList = categoryService.getCategoryById(categoryId);
 
-
-        if (!categoryService.getCategoryById(Long.parseLong(categoryId)).isPresent()) {
+        if (!categoryList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(categoryService.getCategoryById(Long.parseLong(categoryId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+
     }
 
-    @PostMapping("/categorys")
-    public ResponseEntity<Category> addPicture(@RequestBody Category category) {
-        if (category != null) {
-            if (categoryService.getCategoryBytype(category.getType()).isPresent()) {
-                return ResponseEntity.noContent().build();
-            }
-        }
-        //  log.info("affichage"+activite.getEvenement());
+    @PostMapping("/categorys/{categoryId}")
+    public ResponseEntity<Category> addPicture(@RequestBody Category category, @PathVariable long categoryId) {
+        Category categoryObject = categoryService.getCategoryById(categoryId).get();
+        category.setParentCategory(categoryObject);
         Category categoryLocal = categoryService.addCategory(category);
 
-        if (categoryLocal == null) {
+        if (categoryLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(categoryLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(categoryLocal, HttpStatus.OK);
+
     }
 
-    @PutMapping("/categorys/{categorysId}")
-    public ResponseEntity<Category> updateCategory(@PathVariable String categorysId, @RequestBody Category category) {
-
-        if (categoryService.getCategoryById(category.getId()).isPresent()) {
-
-            Category pictureLocal = categoryService.updateCategory(Long.parseLong(categorysId), category);
-
-            if (pictureLocal == null) {
-                return ResponseEntity.noContent().build();
-            } else {
-                return new ResponseEntity<>(pictureLocal, HttpStatus.OK);
-            }
-        } else {
+    @PutMapping("/categorys/{categoryId}/{parentCategoryId}")
+    public ResponseEntity<Category> updateCategory(@PathVariable long categoryId, @RequestBody Category category,@PathVariable long parentCategoryId) {
+        Category pictureLocal = categoryService.updateCategory(categoryId, category,parentCategoryId);
+        if (pictureLocal == null)
             return ResponseEntity.noContent().build();
-        }
+        return new ResponseEntity<>(pictureLocal, HttpStatus.OK);
     }
 
-    @DeleteMapping("/categorys/{categorysId}")
-    public ResponseEntity<Category> deletePicture(@PathVariable String categorysId) {
-
-        if (categoryService.getCategoryById(Long.parseLong(categorysId)).isPresent()) {
-
-            categoryService.deleteCategory(Long.parseLong(categorysId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    @DeleteMapping("/categorys/{categoryId}")
+    public ResponseEntity<Category> deletePicture(@PathVariable long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.accepted().build();
     }
 
-
+    @GetMapping("/categorys/recipes/{idCategory}")
+    public ResponseEntity<List<Recipe>> findRecipesByCategory(@PathVariable long idCategory) {
+        return new ResponseEntity<>(categoryService.findRecipesByCategory(idCategory), HttpStatus.OK);
+    }
 
 
 }

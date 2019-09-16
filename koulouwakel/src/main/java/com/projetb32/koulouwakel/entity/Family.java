@@ -27,7 +27,7 @@ public class Family implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id ;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.DETACH })
     @JoinColumn(name = "parent_id")
     private Family parentFamily;
 

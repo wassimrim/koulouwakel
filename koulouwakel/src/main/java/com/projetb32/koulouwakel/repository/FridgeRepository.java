@@ -15,17 +15,8 @@ public interface FridgeRepository extends JpaRepository<Fridge, Long> {
 
     public Optional<Fridge> findByName(String name);
 
-    /* @Query(" SELECT   All  \r\n" +
-          "	FROM  RecipeIngredient  \r\n" +
-         "WHERE  r.id = ?1  ")
-  public /*List<Recipe> String findRecipe(Long id);*/
     public Optional<Fridge> findById(Long id);
 
-
-//    @Query("select f.id  ,fi.id from Fridge f Join f.fridgeIngredients fi  ")
-//    public String[] findAllFridgeIngredient();
-
-
-    public Optional<List<Fridge>> findFridgeByUser(User user);
+    public List<Fridge> findFridgeByUser(User user);
 
 }

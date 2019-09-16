@@ -6,7 +6,8 @@ package com.projetb32.koulouwakel.service;
  import com.projetb32.koulouwakel.entity.Step;
  import com.projetb32.koulouwakel.repository.RecipeRepository;
 import com.projetb32.koulouwakel.repository.StepRepository;
-import org.springframework.stereotype.Component;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,15 +17,11 @@ import java.util.Optional;
 public class StepService {
 
 
+@Autowired
+    private  RecipeRepository recipeRepository;
+@Autowired
+    private  StepRepository stepRepository;
 
-    private final RecipeRepository recipeRepository;
-
-    private final StepRepository stepRepository;
-
-    public StepService(RecipeRepository recipeRepository, StepRepository stepRepository) {
-        this.recipeRepository = recipeRepository;
-        this.stepRepository = stepRepository;
-    }
 
 
     public Step addStep(Step step, long recipe_id) {
@@ -47,7 +44,7 @@ public class StepService {
 
     }
 
-    public Optional<List<Step>> getStepByRecipeId(Long recipe_id) {
+    public List<Step> getStepByRecipeId(Long recipe_id) {
 
         return stepRepository.findByRecipe_Id(recipe_id);
     }

@@ -1,6 +1,7 @@
 package com.projetb32.koulouwakel.controller;
 
 
+import com.projetb32.koulouwakel.entity.Recipe;
 import com.projetb32.koulouwakel.entity.Tag;
 import com.projetb32.koulouwakel.service.TagService;
 import org.slf4j.Logger;
@@ -18,9 +19,6 @@ import java.util.Optional;
 @RequestMapping("/application")
 public class TagController {
 
-
-    private static final Logger log = LoggerFactory.getLogger(TagController.class);
-
     @Autowired
     private TagService tagService;
 
@@ -28,79 +26,72 @@ public class TagController {
     @GetMapping("/tags")
     public ResponseEntity<List<Tag>> retreiveTag() {
 
-        if (tagService.getAllTag().isEmpty())
-            return ResponseEntity.noContent().build();
+        List<Tag> tagList = null;
+        tagList = tagService.getAllTag();
 
-        return new ResponseEntity<>(tagService.getAllTag(), HttpStatus.OK);
+        if (tagList.isEmpty())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(tagList, HttpStatus.OK);
 
     }
 
-    @GetMapping("/tags/{tagId}")
-    public ResponseEntity<Optional<Tag>> retreiveTagById(@PathVariable String tagId) {
+    @GetMapping("/tags/tagid/{tagId}")
+    public ResponseEntity<Optional<Tag>> retreiveTagById(@PathVariable long tagId) {
 
-
-        if (!tagService.getTagById(Long.parseLong(tagId)).isPresent()) {
+        Optional<Tag> tagList = null;
+        tagList = tagService.getTagById(tagId);
+        if (!tagList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(tagService.getTagById(Long.parseLong(tagId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(tagList, HttpStatus.OK);
     }
+
+    @GetMapping("/tags/taglabel/{tagLabel}")
+    public ResponseEntity<Optional<Tag>> retreiveTagByLabel(@PathVariable String tagLabel) {
+
+        Optional<Tag> tagList = null;
+        tagList = tagService.getTagByLabel(tagLabel);
+        if (!tagList.isPresent())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(tagList, HttpStatus.OK);
+    }
+
+    @GetMapping("/tags/recipes/{tagId}")
+    public ResponseEntity<List<Recipe>> findRecipesByTagId(@PathVariable long tagId) {
+        List<Recipe> listRecipe = null;
+        listRecipe = tagService.findRecipesByTagId(tagId);
+        if (listRecipe == null)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(listRecipe, HttpStatus.OK);
+    }
+
 
     @PostMapping("/tags")
     public ResponseEntity<Tag> addTag(@RequestBody Tag tag) {
-        if (tag != null) {
-            if (tagService.getTagByLabel(tag.getLabel()).isPresent()) {
-                return ResponseEntity.noContent().build();
-            }
-        }
-        //  log.info("affichage"+activite.getEvenement());
-        Tag TagLocal = tagService.addTag(tag);
+        Tag tagLocal = null;
+        tagLocal = tagService.addTag(tag);
 
-        if (TagLocal == null) {
+        if (tagLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(TagLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(tagLocal, HttpStatus.OK);
+
     }
 
     @PutMapping("/tags/{tagId}")
-    public ResponseEntity<Tag> updateTag(@PathVariable String tagId, @RequestBody Tag tag) {
+    public ResponseEntity<Tag> updateTag(@PathVariable long tagId, @RequestBody Tag tag) {
 
-        if (tagService.getTagById(Long.parseLong(tagId)).isPresent()) {
+        Tag tagLocal = tagService.updateTag(tagId, tag);
 
-            Tag TagLocal = tagService.updateTag(Long.parseLong(tagId), tag);
-
-            if (TagLocal == null) {
-                return ResponseEntity.noContent().build();
-            } else {
-                return new ResponseEntity<>(TagLocal, HttpStatus.OK);
-            }
-        } else {
+        if (tagLocal == null)
             return ResponseEntity.noContent().build();
-        }
+        return new ResponseEntity<>(tagLocal, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/tags/{tagId}")
-    public ResponseEntity<Tag> deleteTag(@PathVariable String tagId) {
-
-        if (tagService.getTagById(Long.parseLong(tagId)).isPresent()) {
-
-            tagService.deleteTag(Long.parseLong(tagId));
-
-			/*URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ActiviteId)
-					.toUri();*/
-
-            // Status
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<Tag> deleteTag(@PathVariable long tagId) {
+        tagService.deleteTag(tagId);
+        return ResponseEntity.noContent().build();
     }
-
-
-
 
 
 }

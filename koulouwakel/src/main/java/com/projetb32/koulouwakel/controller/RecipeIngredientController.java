@@ -21,64 +21,44 @@ public class RecipeIngredientController {
 
     private static final Logger log = LoggerFactory.getLogger(RecipeIngredientController.class);
 
-
     @Autowired
-    private IngredientSerivce ingredientSerivce ;
-
-    @Autowired
-    private RecipeIngredientService recipeIngredientService ;
-
-    @Autowired
-    private RecipeService recipeService ;
+    private RecipeIngredientService recipeIngredientService;
 
 
     @GetMapping("/recipeIngredients")
     public ResponseEntity<List<RecipeIngredient>> retreiveRecipeIngredient() {
 
-        if (recipeIngredientService.getAllRecipeIngredient().isEmpty())
-            return ResponseEntity.noContent().build();
+        List<RecipeIngredient> recipeIngredientList = null;
+        recipeIngredientList = recipeIngredientService.getAllRecipeIngredient();
 
-        return new ResponseEntity<>(recipeIngredientService.getAllRecipeIngredient(), HttpStatus.OK);
+        if (recipeIngredientList.isEmpty())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(recipeIngredientList, HttpStatus.OK);
 
     }
-
 
 
     @PostMapping("/recipeIngredients/{recipeId}/{ingredientId}")
-    public ResponseEntity<RecipeIngredient> addIngredient( @PathVariable long recipeId, @PathVariable long ingredientId) {
+    public ResponseEntity<RecipeIngredient> addRecipeIngredient(@PathVariable long recipeId, @PathVariable long ingredientId) {
 
 
+        RecipeIngredient ingredientLocal = recipeIngredientService.addRecipeIngredient(recipeId, ingredientId);
 
-
-        RecipeIngredient ingredientLocal = recipeIngredientService.addRecipeIngredient(recipeId,ingredientId);
-
-        if (ingredientLocal == null) {
+        if (ingredientLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
+
     }
 
 
+    @DeleteMapping("/recipeIngredients/{recipeId}/{ingredientId}")
+    public ResponseEntity<RecipeIngredient> deleteRecipeIngredient(@PathVariable long recipeId, @PathVariable long ingredientId) {
+
+        recipeIngredientService.deleteRecipeIngredient(recipeId, ingredientId);
+        return ResponseEntity.accepted().build();
 
 
-    @DeleteMapping("/recipeIngredients/{tagId}/{ingredientId}")
-    public ResponseEntity<RecipeIngredient> deleteIngredient( @PathVariable long recipeId, @PathVariable long ingredientId) {
-
-        if (ingredientSerivce.getIngredientById(ingredientId).isPresent()) {
-
-            recipeIngredientService.deleteRecipeIngredient(recipeId,ingredientId);
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
-
-
-
-
 
 
 }

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,13 +22,14 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+
+    @ManyToOne(cascade = { CascadeType.DETACH})
     @JoinColumn(name = "parent_id")
     private Category parentCategory;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "parentCategory")
-    private Set<Category> subCategorys = new HashSet<Category>();
+    @OneToMany(mappedBy = "parentCategory" )
+    private List<Category> subCategorys = new ArrayList<Category>();
 
 
     private String type ;

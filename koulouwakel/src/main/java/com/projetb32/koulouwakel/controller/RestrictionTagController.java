@@ -21,60 +21,42 @@ public class RestrictionTagController {
 
     private static final Logger log = LoggerFactory.getLogger(RestrictionTagController.class);
 
-
     @Autowired
-    private RestrictionService restrictionService ;
-
-    @Autowired
-    private RestrictiontagService restrictiontagService ;
-
-    @Autowired
-    private TagService tagService ;
+    private RestrictiontagService restrictiontagService;
 
 
     @GetMapping("/restrictiontags")
-    public ResponseEntity<List<ConstraintTag>> retreiveRestrictiontags() {
+    public ResponseEntity<List<ConstraintTag>> retreiveRestrictionTags() {
 
-        if (restrictiontagService.getAllRestrictionTag().isEmpty())
+        List<ConstraintTag> constraintTagList = null;
+        constraintTagList = restrictiontagService.getAllRestrictionTag();
+        if (constraintTagList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(restrictiontagService.getAllRestrictionTag(), HttpStatus.OK);
+        return new ResponseEntity<>(constraintTagList, HttpStatus.OK);
 
     }
-
 
 
     @PostMapping("/restrictiontags/{tagId}/{restrictionId}")
-    public ResponseEntity<ConstraintTag> addIngredient( @PathVariable long tagId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintTag> addRestrictionTag(@PathVariable long tagId, @PathVariable long restrictionId) {
 
 
-        ConstraintTag restrictionLocal = restrictiontagService.addRestrictionTag(tagId,restrictionId);
+        ConstraintTag restrictionLocal = restrictiontagService.addRestrictionTag(tagId, restrictionId);
 
-        if (restrictionLocal == null) {
+        if (restrictionLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
+
     }
-
-
 
 
     @DeleteMapping("/restrictiontags/{tagId}/{restrictionId}")
-    public ResponseEntity<ConstraintTag> deleteIngredient( @PathVariable long tagId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintTag> deleteRestrictionTag(@PathVariable long tagId, @PathVariable long restrictionId) {
+        restrictiontagService.deleteRestrictionTag(tagId, restrictionId);
+        return ResponseEntity.accepted().build();
 
-        if (restrictionService.getRestrictionById(restrictionId).isPresent()) {
 
-            restrictiontagService.deleteRestrictionTag(tagId,restrictionId);
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
-
-
 
 
 }

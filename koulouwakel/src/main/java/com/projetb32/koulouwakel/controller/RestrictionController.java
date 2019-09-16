@@ -18,7 +18,6 @@ import java.util.Optional;
 public class RestrictionController {
 
 
-
     private static final Logger log = LoggerFactory.getLogger(RestrictionController.class);
 
     @Autowired
@@ -27,81 +26,51 @@ public class RestrictionController {
 
     @GetMapping("/restrictions")
     public ResponseEntity<List<Restriction>> retreiveRestriction() {
+        List<Restriction> restrictionList = null;
+        restrictionList = restrictionService.getAllRestriction();
 
-        if (restrictionService.getAllRestriction().isEmpty())
+        if (restrictionList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(restrictionService.getAllRestriction(), HttpStatus.OK);
+        return new ResponseEntity<>(restrictionList, HttpStatus.OK);
 
     }
 
     @GetMapping("/restrictions/{restrictionId}")
-    public ResponseEntity<Optional<Restriction>>retreiveRestrictionById(@PathVariable String restrictionId) {
+    public ResponseEntity<Optional<Restriction>> retreiveRestrictionById(@PathVariable long restrictionId) {
 
-
-        if (!restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
+        Optional<Restriction> restrictionList = null;
+        restrictionList = restrictionService.getRestrictionById(restrictionId);
+        if (!restrictionList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(restrictionService.getRestrictionById(Long.parseLong(restrictionId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(restrictionList, HttpStatus.OK);
+
     }
 
     @PostMapping("/restrictions")
     public ResponseEntity<Restriction> addRestriction(@RequestBody Restriction restriction) {
-        if (restriction != null) {
-            if (restrictionService.getRestrictionByLabel(restriction.getLabel()).isPresent()) {
-                return ResponseEntity.noContent().build();
-            }
-        }
-        //  log.info("affichage"+activite.getEvenement());
+
         Restriction RestrictionLocal = restrictionService.addRestriction(restriction);
 
-        if (RestrictionLocal == null) {
+        if (RestrictionLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
     }
+
 
     @PutMapping("/restrictions/{restrictionId}")
-    public ResponseEntity<Restriction> updateRestriction(@PathVariable String restrictionId, @RequestBody Restriction restriction) {
+    public ResponseEntity<Restriction> updateRestriction(@PathVariable long restrictionId, @RequestBody Restriction restriction) {
 
-        if (restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
+        Restriction RestrictionLocal = restrictionService.updateTag(restrictionId, restriction);
 
-            Restriction RestrictionLocal = restrictionService.updateTag(Long.parseLong(restrictionId), restriction);
-
-            if (RestrictionLocal == null) {
-                return ResponseEntity.noContent().build();
-            } else {
-                return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
-            }
-        } else {
+        if (RestrictionLocal == null)
             return ResponseEntity.noContent().build();
-        }
+        return new ResponseEntity<>(RestrictionLocal, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/restrictions/{restrictionId}")
-    public ResponseEntity<Restriction> deleteRestriction(@PathVariable String restrictionId) {
-
-        if (restrictionService.getRestrictionById(Long.parseLong(restrictionId)).isPresent()) {
-
-            restrictionService.deleteTag(Long.parseLong(restrictionId));
-
-			/*URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ActiviteId)
-					.toUri();*/
-
-            // Status
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<Restriction> deleteRestriction(@PathVariable long restrictionId) {
+        restrictionService.deleteTag(restrictionId);
+        return ResponseEntity.accepted().build();
     }
-
-
-
-
-
-
 }

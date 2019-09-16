@@ -1,12 +1,11 @@
 package com.projetb32.koulouwakel.controller;
 
 
-
 import com.projetb32.koulouwakel.entity.ConstraintCategory;
 import com.projetb32.koulouwakel.service.CategoryService;
 import com.projetb32.koulouwakel.service.RestrictionCategoryService;
 import com.projetb32.koulouwakel.service.RestrictionService;
- import org.slf4j.Logger;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,58 +24,45 @@ public class RestrictionCategoryController {
 
 
     @Autowired
-    private RestrictionService restrictionService ;
+    private RestrictionCategoryService restrictionCategoryService;
 
-    @Autowired
-    private RestrictionCategoryService restrictionCategoryService ;
 
-    @Autowired
-    private CategoryService categoryService ;
 
 
     @GetMapping("/restrictionCategory")
-    public ResponseEntity<List<ConstraintCategory>> retreiveRestrictiontags() {
+    public ResponseEntity<List<ConstraintCategory>> retreiveRestrictionCategorys() {
 
-        if (restrictionCategoryService.getAllRestrictionCategory().isEmpty())
+        List<ConstraintCategory> listConstraintCategory = null;
+        listConstraintCategory = restrictionCategoryService.getAllRestrictionCategory();
+        if (listConstraintCategory.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(restrictionCategoryService.getAllRestrictionCategory(), HttpStatus.OK);
+        return new ResponseEntity<>(listConstraintCategory, HttpStatus.OK);
 
     }
-
 
 
     @PostMapping("/restrictionCategory/{categoryId}/{restrictionId}")
-    public ResponseEntity<ConstraintCategory> addIngredient( @PathVariable long categoryId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintCategory> addRestrictionCategory(@PathVariable long categoryId, @PathVariable long restrictionId) {
 
 
-        ConstraintCategory restrictionLocal = restrictionCategoryService.addRestrictionCategory(categoryId,restrictionId);
+        ConstraintCategory restrictionLocal = restrictionCategoryService.addRestrictionCategory(categoryId, restrictionId);
 
-        if (restrictionLocal == null) {
+        if (restrictionLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
+
     }
-
-
 
 
     @DeleteMapping("/restrictionCategory/{categoryId}/{restrictionId}")
-    public ResponseEntity<ConstraintCategory> deleteIngredient( @PathVariable long categoryId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintCategory> deleteRestrictionCategory(@PathVariable long categoryId, @PathVariable long restrictionId) {
 
-        if (restrictionService.getRestrictionById(restrictionId).isPresent()) {
+        restrictionCategoryService.deleteRestrictionCategory(categoryId, restrictionId);
 
-            restrictionCategoryService.deleteRestrictionCategory(categoryId,restrictionId);
+        return ResponseEntity.accepted().build();
 
-            return ResponseEntity.accepted().build();
 
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
-
-
 
 
 }

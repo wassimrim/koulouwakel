@@ -5,7 +5,6 @@ import com.projetb32.koulouwakel.entity.Category;
 import com.projetb32.koulouwakel.entity.Ingredient;
 import com.projetb32.koulouwakel.service.CategoryService;
 import com.projetb32.koulouwakel.service.IngredientSerivce;
-import com.projetb32.koulouwakel.service.PictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,84 +23,52 @@ public class IngredientController {
 
 
     @Autowired
-    private IngredientSerivce ingredientSerivce ;
-
+    private IngredientSerivce ingredientSerivce;
     @Autowired
-    private PictureService pictureService ;
-
-    @Autowired
-    private CategoryService categoryService ;
-
+    private CategoryService categoryService;
 
     @GetMapping("/ingredients")
     public ResponseEntity<List<Ingredient>> retreiveIngredient() {
 
-        if (ingredientSerivce.getAllIngredient().isEmpty())
-            return ResponseEntity.noContent().build();
+        List<Ingredient> ingredientList = ingredientSerivce.getAllIngredient();
 
-        return new ResponseEntity<>(ingredientSerivce.getAllIngredient(), HttpStatus.OK);
+        if (ingredientList.isEmpty())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(ingredientList, HttpStatus.OK);
 
     }
 
     @GetMapping("/ingredients/{ingredientId}")
-    public ResponseEntity<Optional<Ingredient>> retreiveIngredientById(@PathVariable String ingredientId) {
-
-
-        if (!ingredientSerivce.getIngredientById(Long.parseLong(ingredientId)).isPresent()) {
+    public ResponseEntity<Optional<Ingredient>> retreiveIngredientById(@PathVariable long ingredientId) {
+        Optional<Ingredient> ingredientList = null;
+        ingredientList = ingredientSerivce.getIngredientById(ingredientId);
+        if (!ingredientList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(ingredientSerivce.getIngredientById(Long.parseLong(ingredientId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(ingredientList, HttpStatus.OK);
     }
 
     @PostMapping("/ingredients/{categoryId}/{pictureId}")
-    public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient,@PathVariable long categoryId,@PathVariable long pictureId) {
-        if (ingredient != null) {
-            if (ingredientSerivce.getIngredientByLabel(ingredient.getName()).isPresent()) {
-                return ResponseEntity.noContent().build();
-            }
-        }
-        //  log.info("affichage"+activite.getEvenement());
-        Ingredient ingredientLocal = ingredientSerivce.addIngredient(ingredient,pictureId,categoryId);
+    public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient, @PathVariable long categoryId, @PathVariable long pictureId) {
+        Ingredient ingredientLocal = ingredientSerivce.addIngredient(ingredient, pictureId, categoryId);
 
-        if (ingredientLocal == null) {
+        if (ingredientLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
+
     }
 
 
-    @DeleteMapping("/ingredients/{ingredientsId}")
-    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable String ingredientsId) {
+    @DeleteMapping("/ingredients/{ingredientId}")
+    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable long ingredientId) {
+        ingredientSerivce.deleteIngredient(ingredientId);
+        return ResponseEntity.accepted().build();
 
-        if (ingredientSerivce.getIngredientById(Long.parseLong(ingredientsId)).isPresent()) {
 
-            ingredientSerivce.deleteIngredient(Long.parseLong(ingredientsId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
 
     @GetMapping("/ingredients/category/{categoryId}")
-    public ResponseEntity<Optional<List<Ingredient>>> getIngredientsByCategory(@PathVariable long categoryId)
-    {
+    public ResponseEntity<List<Ingredient>> getIngredientsByCategory(@PathVariable long categoryId) {
         Category category = categoryService.getCategoryById(categoryId).get();
-
-        if(category != null)
-        {
-            if(!ingredientSerivce.getIngredientsByCategory(category).isPresent())
-            return ResponseEntity.noContent().build();
-
-            return new ResponseEntity<>(ingredientSerivce.getIngredientsByCategory(category),HttpStatus.OK);
-        }
-
-        return  ResponseEntity.noContent().build();
-
-
+        return new ResponseEntity<>(ingredientSerivce.getIngredientsByCategory(category), HttpStatus.OK);
     }
-
 }

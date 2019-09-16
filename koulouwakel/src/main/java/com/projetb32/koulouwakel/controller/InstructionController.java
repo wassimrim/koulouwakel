@@ -25,94 +25,62 @@ public class InstructionController {
 
 
     @Autowired
-    private IngredientSerivce ingredientSerivce ;
-
-    @Autowired
-    private StepService stepService ;
-
-    @Autowired
-    private InstructionService instructionService ;
+    private InstructionService instructionService;
 
 
     @GetMapping("/instructions")
     public ResponseEntity<List<Instruction>> retreiveInstruction() {
-
-        if (instructionService.getAllInstruction().isEmpty())
+        List<Instruction> instructionList = null;
+        instructionList = instructionService.getAllInstruction();
+        if (instructionList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(instructionService.getAllInstruction(), HttpStatus.OK);
+        return new ResponseEntity<>(instructionList, HttpStatus.OK);
 
     }
 
     @GetMapping("/instructions/instructionid/{instructionId}")
-    public ResponseEntity<Optional<Instruction>> retreiveInstructionById(@PathVariable String instructionId) {
-
-
-        if (!instructionService.getInstructionById(Long.parseLong(instructionId)).isPresent()) {
+    public ResponseEntity<Optional<Instruction>> retreiveInstructionById(@PathVariable long instructionId) {
+        Optional<Instruction> instruction = null;
+        instruction = instructionService.getInstructionById(instructionId);
+        if (!instruction.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(instructionService.getInstructionById(Long.parseLong(instructionId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(instruction, HttpStatus.OK);
     }
+
     @GetMapping("/instructions/stepid/{stepId}")
-    public ResponseEntity<Optional<List<Instruction>>> retreiveInstructionByStepId(@PathVariable String stepId) {
-
-
-        if (!stepService.getStepById(Long.parseLong(stepId)).isPresent()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(instructionService.getInstructionByStepId(Long.parseLong(stepId)), HttpStatus.OK);
-        }
+    public ResponseEntity<List<Instruction>> retreiveInstructionByStepId(@PathVariable long stepId) {
+        return new ResponseEntity<>(instructionService.getInstructionByStepId(stepId), HttpStatus.OK);
     }
-
 
     @PostMapping("/instructions/{ingredient_id}/{step_id}")
-    public ResponseEntity<Instruction> addInstruction(@RequestBody Instruction instruction,@PathVariable long ingredient_id,@PathVariable long step_id) {
+    public ResponseEntity<Instruction> addInstruction(@RequestBody Instruction instruction, @PathVariable long ingredient_id, @PathVariable long step_id) {
 
-        //  log.info("affichage"+activite.getEvenement());
-        Instruction ingredientLocal = instructionService.addInstruction(instruction,step_id,ingredient_id);
+        Instruction ingredientLocal = instructionService.addInstruction(instruction, step_id, ingredient_id);
 
-        if (ingredientLocal == null) {
+        if (ingredientLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
+
     }
 
     @PostMapping("/instructions/{step_id}")
-    public ResponseEntity<Instruction> addInstructions(@RequestBody Instruction instruction,@PathVariable long step_id) {
+    public ResponseEntity<Instruction> addInstructions(@RequestBody Instruction instruction, @PathVariable long step_id) {
 
-        //  log.info("affichage"+activite.getEvenement());
-        Instruction ingredientLocal = instructionService.addInstructions(instruction,step_id);
 
-        if (ingredientLocal == null) {
+        Instruction ingredientLocal = instructionService.addInstructions(instruction, step_id);
+
+        if (ingredientLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(ingredientLocal, HttpStatus.OK);
+
     }
 
 
     @DeleteMapping("/instructions/{instructionId}")
     public ResponseEntity<Instruction> deleteInstruction(@PathVariable String instructionId) {
-
-        if (instructionService.getInstructionById(Long.parseLong(instructionId)).isPresent()) {
-
-            instructionService.deleteInstruction(Long.parseLong(instructionId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+        instructionService.deleteInstruction(Long.parseLong(instructionId));
+        return ResponseEntity.accepted().build();
     }
-
-
-
-
-
-
-
 
 
 }

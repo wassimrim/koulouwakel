@@ -5,8 +5,10 @@ import com.projetb32.koulouwakel.entity.PictureRecipe;
 import com.projetb32.koulouwakel.entity.Recipe;
 import com.projetb32.koulouwakel.repository.PictureRecipeRepository;
 import com.projetb32.koulouwakel.repository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,32 +19,29 @@ import java.util.Optional;
 
 @Component
 public class PictureRecipeService {
-    private final PictureRecipeRepository pictureRecipeRepository;
-   private final RecipeService  recipeService;
-    private static String uploadDirectory =System.getProperty("user.dir")+"/src/uploads";
+    @Autowired
+    private PictureRecipeRepository pictureRecipeRepository;
+    @Autowired
+    private  RecipeService recipeService;
 
-    public PictureRecipeService(PictureRecipeRepository pictureRecipeRepository, RecipeService recipeService) {
-        super();
-        this.pictureRecipeRepository = pictureRecipeRepository;
-        this.recipeService=recipeService;
-    }
+    private static String uploadDirectory = System.getProperty("user.dir") + "/src/uploads";
 
-    public PictureRecipe addPictureRecipe(MultipartFile file,Long idRecipe)
-    {
+
+
+    public PictureRecipe addPictureRecipe(MultipartFile file, Long idRecipe) {
         PictureRecipe p = new PictureRecipe();
-        Recipe r = new Recipe();
-         r = recipeService.getRecipeById(idRecipe).get();
+        Recipe r ;
+        r = recipeService.getRecipeById(idRecipe).get();
         p.setLabel(file.getOriginalFilename());
         p.setRecipe(r);
-        Path fileNameAndPath = Paths.get(uploadDirectory,file.getOriginalFilename());
+        Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
         StringBuilder fileName = new StringBuilder();
         fileName.append(file.getOriginalFilename());
         try {
             Files.write(fileNameAndPath, file.getBytes());
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
         return pictureRecipeRepository.save(p);
     }
 
@@ -53,7 +52,6 @@ public class PictureRecipeService {
     }
 
     public Optional<PictureRecipe> getPictureRecipeById(Long id) {
-
 
 
         return pictureRecipeRepository.findById(id);
@@ -68,9 +66,8 @@ public class PictureRecipeService {
     public void deletePictureRecipe(Long id) {
 
         PictureRecipe pictureRecipe = pictureRecipeRepository.findById(id).get();
-        if(pictureRecipe != null)
-        {
-            Path fileNameAndPath = Paths.get(uploadDirectory,pictureRecipe.getLabel());
+        if (pictureRecipe != null) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, pictureRecipe.getLabel());
             try {
                 Files.delete(fileNameAndPath);
                 pictureRecipeRepository.deleteById(id);
@@ -81,15 +78,15 @@ public class PictureRecipeService {
 
     }
 
-    public PictureRecipe updatePictureRecipe(Long id,String name) {
+    public PictureRecipe updatePictureRecipe(long id, String name) {
 
         PictureRecipe pictureRecipe = pictureRecipeRepository.findById(id).get();
-        Path fileNameAndPathSource = Paths.get(uploadDirectory,pictureRecipe.getLabel());
+        Path fileNameAndPathSource = Paths.get(uploadDirectory, pictureRecipe.getLabel());
         pictureRecipe.setLabel(name);
-        Path  currentlyFileNameAndPath = Paths.get(uploadDirectory,name);
+        Path currentlyFileNameAndPath = Paths.get(uploadDirectory, name);
 
         try {
-            Files.move(fileNameAndPathSource,currentlyFileNameAndPath,StandardCopyOption.REPLACE_EXISTING);
+            Files.move(fileNameAndPathSource, currentlyFileNameAndPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,9 +99,8 @@ public class PictureRecipeService {
     public PictureRecipe updatePictureRecipe2(Long id, MultipartFile file) {
 
         PictureRecipe pictureRecipe = pictureRecipeRepository.findById(id).get();
-        Path fileNameAndPathSource = Paths.get(uploadDirectory,file.getOriginalFilename());
+        Path fileNameAndPathSource = Paths.get(uploadDirectory, file.getOriginalFilename());
         pictureRecipe.setLabel(file.getOriginalFilename());
-        // Path  currentlyFileNameAndPath = Paths.get(uploadDirectory,name);
         StringBuilder fileName = new StringBuilder();
         fileName.append(file.getOriginalFilename());
         try {
@@ -113,9 +109,7 @@ public class PictureRecipeService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         pictureRecipeRepository.save(pictureRecipe);
-
         return pictureRecipe;
     }
 }

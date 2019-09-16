@@ -3,6 +3,7 @@ package com.projetb32.koulouwakel.service;
 
 import com.projetb32.koulouwakel.entity.Restriction;
 import com.projetb32.koulouwakel.repository.RestrictionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,13 +12,8 @@ import java.util.Optional;
 @Component
 public class RestrictionService {
 
-    private final RestrictionRepository restrictionRepository;
-
-
-    public RestrictionService(RestrictionRepository restrictionRepository) {
-        super();
-        this.restrictionRepository = restrictionRepository;
-    }
+    @Autowired
+    private RestrictionRepository restrictionRepository;
 
 
     public Restriction addRestriction(Restriction restriction) {
@@ -48,19 +44,12 @@ public class RestrictionService {
 
     }
 
-    public Restriction updateTag(Long id,Restriction restriction) {
-
-
+    public Restriction updateTag(Long id, Restriction restriction) {
         Restriction restrictionFound = restrictionRepository.findById(id).get();
-
-
         restrictionFound.setLabel(restriction.getLabel());
         restrictionRepository.save(restrictionFound);
-
         return restrictionFound;
     }
-
-
 
 
 }

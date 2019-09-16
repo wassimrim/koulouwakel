@@ -7,8 +7,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
-@RepositoryRestResource(path="picture",collectionResourceRel="picture")
+@RepositoryRestResource(path = "picture", collectionResourceRel = "picture")
 public interface PictureRepository extends JpaRepository<Picture, Long> {
 
-Optional<Picture> findByLabel(String label);
+    Optional<Picture> findByLabel(String label);
 }

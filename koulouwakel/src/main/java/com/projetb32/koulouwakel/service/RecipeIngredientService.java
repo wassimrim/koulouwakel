@@ -5,6 +5,8 @@ import com.projetb32.koulouwakel.entity.RecipeIngredientPk;
 import com.projetb32.koulouwakel.repository.IngredientRepository;
 import com.projetb32.koulouwakel.repository.RecipeIngredientRepository;
 import com.projetb32.koulouwakel.repository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,20 +15,12 @@ import java.util.Optional;
 @Component
 public class RecipeIngredientService {
 
-
-
-    private final IngredientRepository ingredientRepository;
-
-    private final RecipeIngredientRepository recipeIngredientRepository;
-
-    private final RecipeRepository recipeRepository;
-
-    public RecipeIngredientService(IngredientRepository ingredientRepository, RecipeIngredientRepository recipeIngredientRepository, RecipeRepository recipeRepository) {
-        this.ingredientRepository = ingredientRepository;
-        this.recipeIngredientRepository = recipeIngredientRepository;
-        this.recipeRepository = recipeRepository;
-    }
-
+    @Autowired
+    private  IngredientRepository ingredientRepository;
+    @Autowired
+    private  RecipeIngredientRepository recipeIngredientRepository;
+    @Autowired
+    private  RecipeRepository recipeRepository;
 
     public RecipeIngredient addRecipeIngredient( long recipe_id, long ingredient_id ) {
 
@@ -40,8 +34,6 @@ public class RecipeIngredientService {
     }
 
     public List<RecipeIngredient> getAllRecipeIngredient() {
-
-
         return recipeIngredientRepository.findAll();
     }
 

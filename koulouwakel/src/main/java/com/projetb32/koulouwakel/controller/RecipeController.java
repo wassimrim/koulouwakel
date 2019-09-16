@@ -24,106 +24,75 @@ public class RecipeController {
 
 
     @Autowired
-    private FamilyService familyService ;
-
-    @Autowired
-    private RecipeService recipeService ;
-
-    private UserPrinciple userPrinciple ;
+    private RecipeService recipeService;
 
 
     @GetMapping("/recipes")
     public ResponseEntity<List<Recipe>> retreiveRecipe() {
-
-        if (recipeService.getAllRecipe().isEmpty())
+        List<Recipe> listRecipe = null;
+        listRecipe = recipeService.getAllRecipe();
+        if (listRecipe.isEmpty())
             return ResponseEntity.noContent().build();
 
-        return new ResponseEntity<>(recipeService.getAllRecipe(), HttpStatus.OK);
+        return new ResponseEntity<>(listRecipe, HttpStatus.OK);
 
     }
 
     @GetMapping("/recipes/recipeid/{recipeId}")
-    public ResponseEntity<Optional<Recipe>> retreiveRecipeById(@PathVariable String recipeId) {
-
-
-        if (!recipeService.getRecipeById(Long.parseLong(recipeId)).isPresent()) {
+    public ResponseEntity<Optional<Recipe>> retreiveRecipeById(@PathVariable long recipeId) {
+        Optional<Recipe> recipeList = null;
+        recipeList = recipeService.getRecipeById(recipeId);
+        if (!recipeList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(recipeService.getRecipeById(Long.parseLong(recipeId)), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(recipeList, HttpStatus.OK);
+
     }
 
 
-    @GetMapping("/recipes/recipedifficulty/{recipeDifficulty}")
-    public ResponseEntity<Optional<Recipe>> retreiveRecipeByDifficulty(@PathVariable String recipeDifficulty) {
+    @GetMapping("/recipes/difficulty/{recipeDifficulty}")
+    public ResponseEntity<List<Recipe>> retreiveRecipeByDifficulty(@PathVariable String recipeDifficulty) {
 
+        List<Recipe> recipeList = null;
+        recipeList = recipeService.findByDifficulty(recipeDifficulty);
 
-        if (!recipeService.getRecipeByDifficulty(recipeDifficulty).isPresent()) {
+        if (recipeList == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(recipeService.getRecipeByDifficulty(recipeDifficulty), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(recipeList, HttpStatus.OK);
+
     }
 
 
     @GetMapping("/recipes/recipetitle/{recipeTitle}")
     public ResponseEntity<Optional<Recipe>> retreiveRecipeByTitle(@PathVariable String recipeTitle) {
 
+        Optional<Recipe> recipeList = null;
+        recipeList = recipeService.getRecipeByTitle(recipeTitle);
 
-        if (!recipeService.getRecipeByTitle(recipeTitle).isPresent()) {
+        if (!recipeList.isPresent())
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(recipeService.getRecipeByTitle(recipeTitle), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(recipeList, HttpStatus.OK);
+
     }
 
     @PostMapping("/recipes/{family_id}/{user_id}")
-    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe,@PathVariable long family_id,@PathVariable long user_id) {
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe, @PathVariable long family_id, @PathVariable long user_id) {
 
-        //  log.info("affichage"+activite.getEvenement());
-        Recipe recipeLocal = recipeService.addRecipe(recipe,family_id,user_id);
+        Recipe recipeLocal = recipeService.addRecipe(recipe, family_id, user_id);
 
-        if (recipeLocal == null) {
+        if (recipeLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(recipeLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(recipeLocal, HttpStatus.OK);
+
     }
-
-   /* @PostMapping("/recipes/{family_id}/{user_id}")
-    public ResponseEntity<Recipe> addRecipej(@RequestBody Recipe recipe,@PathVariable long family_id,@PathVariable long user_id) {
-
-        //  log.info("affichage"+activite.getEvenement());
-        Recipe recipeLocal = recipeService.addRecipe(recipe,family_id,user_id);
-
-        if (recipeLocal == null) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(recipeLocal, HttpStatus.OK);
-        }
-    }*/
 
 
     @DeleteMapping("/recipes/{recipeId}")
-    public ResponseEntity<Recipe> deleteRecipe(@PathVariable String recipeId) {
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable long recipeId) {
+        recipeService.deleteRecipe(recipeId);
+        return ResponseEntity.accepted().build();
 
-        if (recipeService.getRecipeById(Long.parseLong(recipeId)).isPresent()) {
 
-            recipeService.deleteRecipe(Long.parseLong(recipeId));
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
-
-
-
-
-
-
-
 
 
 }

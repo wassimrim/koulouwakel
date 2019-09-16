@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StepRepository extends JpaRepository <Step,Long> {
-    Optional<List<Step>> findByRecipe_Id(Long id);
+    List<Step> findByRecipe_Id(Long id);
 
 }

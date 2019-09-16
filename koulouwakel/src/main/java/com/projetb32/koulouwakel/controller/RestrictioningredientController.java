@@ -22,59 +22,40 @@ public class RestrictioningredientController {
 
     private static final Logger log = LoggerFactory.getLogger(RestrictionTagController.class);
 
-
     @Autowired
-    private RestrictionService restrictionService ;
-
-    @Autowired
-    private RestrictioningredientService restrictioningredientService ;
-
-    @Autowired
-    private IngredientRepository ingredientRepository ;
+    private RestrictioningredientService restrictioningredientService;
 
 
     @GetMapping("/restrictioningredient")
-    public ResponseEntity<List<ConstraintIngredient>> retreiveRestrictiontags() {
+    public ResponseEntity<List<ConstraintIngredient>> retreiveRestrictionIngredients() {
 
-        if (restrictioningredientService.getAllRestrictioningredient().isEmpty())
+        List<ConstraintIngredient> constraintIngredientList = null;
+        constraintIngredientList = restrictioningredientService.getAllRestrictioningredient();
+        if (constraintIngredientList.isEmpty())
             return ResponseEntity.noContent().build();
-
-        return new ResponseEntity<>(restrictioningredientService.getAllRestrictioningredient(), HttpStatus.OK);
+        return new ResponseEntity<>(constraintIngredientList, HttpStatus.OK);
 
     }
-
 
 
     @PostMapping("/restrictioningredient/{ingredientId}/{restrictionId}")
-    public ResponseEntity<ConstraintIngredient> addIngredient( @PathVariable long ingredientId, @PathVariable long restrictionId) {
+    public ResponseEntity<ConstraintIngredient> addRestrictionIngredient(@PathVariable long ingredientId, @PathVariable long restrictionId) {
 
 
-        ConstraintIngredient restrictionLocal = restrictioningredientService.addRestrictioningredient(ingredientId,restrictionId);
+        ConstraintIngredient restrictionLocal = restrictioningredientService.addRestrictioningredient(ingredientId, restrictionId);
 
-        if (restrictionLocal == null) {
+        if (restrictionLocal == null)
             return ResponseEntity.noContent().build();
-        } else {
-            return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(restrictionLocal, HttpStatus.OK);
+
     }
-
-
 
 
     @DeleteMapping("/restrictioningredient/{ingredientId}/{restrictionId}")
-    public ResponseEntity<ConstraintIngredient> deleteIngredient( @PathVariable long ingredientId, @PathVariable long restrictionId) {
-
-        if (restrictionService.getRestrictionById(restrictionId).isPresent()) {
-
-            restrictioningredientService.deleteRestrictioningredient(ingredientId,restrictionId);
-
-            return ResponseEntity.accepted().build();
-
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<ConstraintIngredient> deleteRestrictionIngredient(@PathVariable long ingredientId, @PathVariable long restrictionId) {
+        restrictioningredientService.deleteRestrictioningredient(ingredientId, restrictionId);
+        return ResponseEntity.accepted().build();
     }
-
 
 
 }

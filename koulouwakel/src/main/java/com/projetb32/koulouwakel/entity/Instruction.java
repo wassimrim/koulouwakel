@@ -22,7 +22,7 @@ public class Instruction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id ;
 
-    private String Description ;
+    private String description ;
 
     private int quantity ;
 

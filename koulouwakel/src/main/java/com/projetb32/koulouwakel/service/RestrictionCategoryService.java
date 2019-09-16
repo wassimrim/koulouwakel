@@ -5,6 +5,7 @@ import com.projetb32.koulouwakel.entity.ConstraintCategoryPk;
 import com.projetb32.koulouwakel.repository.CategoryRepository;
 import com.projetb32.koulouwakel.repository.RestrictionCategoryRepository;
 import com.projetb32.koulouwakel.repository.RestrictionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,18 +14,14 @@ import java.util.Optional;
 @Component
 public class RestrictionCategoryService {
 
+@Autowired
+    private  RestrictionRepository restrictionRepository;
+@Autowired
+    private  RestrictionCategoryRepository restrictionCategoryRepository;
+@Autowired
+    private  CategoryRepository categoryRepository;
 
-    private final RestrictionRepository restrictionRepository;
 
-    private final RestrictionCategoryRepository restrictionCategoryRepository;
-
-    private final CategoryRepository categoryRepository;
-
-    public RestrictionCategoryService(RestrictionRepository restrictionRepository, RestrictionCategoryRepository restrictionCategoryRepository, CategoryRepository categoryRepository) {
-        this.restrictionRepository = restrictionRepository;
-        this.restrictionCategoryRepository = restrictionCategoryRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
 
     public ConstraintCategory addRestrictionCategory(  long category_id ,long restriction_id ) {
@@ -43,14 +40,6 @@ public class RestrictionCategoryService {
 
         return restrictionCategoryRepository.findAll();
     }
-
-    public Optional<ConstraintCategory> getRestrictionCategoryById(Long id) {
-
-        return restrictionCategoryRepository.findById(id);
-
-    }
-
-
 
     public void deleteRestrictionCategory(Long category_id,Long restrictiontId) {
 
