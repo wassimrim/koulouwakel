@@ -1,6 +1,7 @@
 package com.projetb32.koulouwakel.controller;
 
 
+import com.projetb32.koulouwakel.entity.Ingredient;
 import com.projetb32.koulouwakel.entity.RecipeIngredient;
 import com.projetb32.koulouwakel.service.IngredientSerivce;
 import com.projetb32.koulouwakel.service.RecipeIngredientService;
@@ -34,6 +35,18 @@ public class RecipeIngredientController {
         if (recipeIngredientList.isEmpty())
             return ResponseEntity.noContent().build();
         return new ResponseEntity<>(recipeIngredientList, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/recipeIngredients/{recipeId}")
+    public ResponseEntity<List<Ingredient>> retreiveRecipeIngredient(@PathVariable long recipeId) {
+
+        List<Ingredient> ingredientsList = null;
+        ingredientsList = recipeIngredientService.findIngredientsByRecipeId(recipeId);
+
+        if (ingredientsList.isEmpty())
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(ingredientsList, HttpStatus.OK);
 
     }
 

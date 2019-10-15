@@ -1,5 +1,6 @@
 package com.projetb32.koulouwakel.service;
 
+import com.projetb32.koulouwakel.entity.Ingredient;
 import com.projetb32.koulouwakel.entity.RecipeIngredient;
 import com.projetb32.koulouwakel.entity.RecipeIngredientPk;
 import com.projetb32.koulouwakel.repository.IngredientRepository;
@@ -50,6 +51,11 @@ public class RecipeIngredientService {
         recipeIngredientRepository.delete(new RecipeIngredient
                 (new RecipeIngredientPk(ingredientRepository.findById(ingredientId).get(),
                         recipeRepository.findById(recipeId).get())));
+    }
+
+    public List<Ingredient> findIngredientsByRecipeId(Long recipeId)
+    {
+        return recipeIngredientRepository.findIngredientsByRecipeId(recipeId);
     }
 
 }
